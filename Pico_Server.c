@@ -81,9 +81,16 @@ err_t tcp_server_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err
     buffer[len] = '\0'; 
 
     printf("RX: %s\n", buffer);
-    if (parse_and_execute(buffer)) {
-        tcp_write(tpcb, "ACK", 3, TCP_WRITE_FLAG_COPY);
-    } 
+    
+    // Parseamos y movemos los servos
+    parse_and_execute(buffer);
+
+    // --- CORRECCIÓN AQUÍ ---
+    // Eliminamos el tcp_write("ACK"). 
+    // Esto evita que se llenen los buffers si el cliente no lee.
+    // tcp_write(tpcb, "ACK", 3, TCP_WRITE_FLAG_COPY); 
+    // -----------------------
+
     tcp_recved(tpcb, p->tot_len);
     pbuf_free(p);
     return ERR_OK;
