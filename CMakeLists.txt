@@ -47,7 +47,8 @@ pico_enable_stdio_usb(Pico_Client 1)
 # Add the standard library to the build
 target_link_libraries(Pico_Client
         pico_stdlib
-        pico_cyw43_arch_lwip_threadsafe_background)
+        pico_cyw43_arch_lwip_threadsafe_background
+        hardware_adc)
 
 # Add the standard include files to the build
 target_include_directories(Pico_Client PRIVATE
