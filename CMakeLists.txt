@@ -36,7 +36,8 @@ pico_sdk_init()
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(Pico_Server Pico_Server.c 
-                servo.c)
+                lib/servo/servo.c
+                )
 
 pico_set_program_name(Pico_Server "Pico_Server")
 pico_set_program_version(Pico_Server "0.1")

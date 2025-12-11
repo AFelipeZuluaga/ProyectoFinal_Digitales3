@@ -1,24 +1,35 @@
+// Pico_Server.c
+
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
-#include "lwip/tcp.h"
+
+#include "lwip/udp.h"
 #include "lwip/pbuf.h"
-#include "servo.h" 
 
-// --- CONFIGURACIÓN ---
-#define AP_SSID "MANO_ROBOTICA_NET"
-#define AP_PASSWORD "12345678"
-#define TCP_PORT 4242
+#include "lib/servo/servo.h"
 
-#define NUM_FINGERS 5
-#define VMAX 9
-#define INVERT_FINGER_INDEX 4 
+// --- CONFIGURACIÓN WI-FI (STA en hotspot iOS) ---
+#define WIFI_SSID     "Mimic Hand net"
+#define WIFI_PASSWORD "12345678"
+#define UDP_PORT      4242
 
-servo_pca_t servo_dev;
+// --- CONFIGURACIÓN MANO / SERVOS ---
+#define NUM_FINGERS         5
+#define VMAX                9          // valores esperados 0..9
+#define INVERT_FINGER_INDEX 4          // dedo invertido (si uno gira al revés)
 
-// --- FUNCIONES DE SERVOS ---
+static servo_pca_t servo_dev;
+static struct udp_pcb *udp_server_pcb = NULL;
+
+static uint32_t packet_count = 0;
+static uint32_t last_packet_ms = 0;
+
+// --- UTILIDADES ---
+
 static int clampi(int x, int a, int b) {
     if (x < a) return a;
     if (x > b) return b;
@@ -27,15 +38,19 @@ static int clampi(int x, int a, int b) {
 
 static float value_to_us(int finger_index, int v) {
     v = clampi(v, 0, VMAX);
-    float norm = (float)v / (float)VMAX;
-    if (finger_index == INVERT_FINGER_INDEX) norm = 1.0f - norm;
+
+    float norm = (float)v / (float)VMAX;  // 0.0 .. 1.0
+
+    if (finger_index == INVERT_FINGER_INDEX) {
+        norm = 1.0f - norm;
+    }
+
     return SERVO_US_MIN + norm * (SERVO_US_MAX - SERVO_US_MIN);
 }
 
 static void apply_values(servo_pca_t *dev, const int v[NUM_FINGERS]) {
-    // Si el dispositivo no se inició correctamente (freq = 0), no intentamos mover
-    if (dev->freq_hz == 0) return; 
-    
+    if (dev->freq_hz == 0.0f) return;
+
     for (int i = 0; i < NUM_FINGERS; i++) {
         float us = value_to_us(i, v[i]);
         servo_set_us(dev, (uint8_t)i, us);
@@ -47,115 +62,149 @@ static bool parse_and_execute(char *line) {
     char *tokens[16];
     int count = 0;
     char buf_copy[128];
-    strncpy(buf_copy, line, sizeof(buf_copy)-1);
-    buf_copy[sizeof(buf_copy)-1] = 0;
+
+    strncpy(buf_copy, line, sizeof(buf_copy) - 1);
+    buf_copy[sizeof(buf_copy) - 1] = '\0';
 
     char *tok = strtok(buf_copy, delims);
     while (tok && count < 16) {
-        if (*tok != '\0') tokens[count++] = tok;
+        if (*tok != '\0') {
+            tokens[count++] = tok;
+        }
         tok = strtok(NULL, delims);
     }
 
-    if (count != 7 || strcmp(tokens[0], "H") != 0) return false;
+    if (count != 6 || strcmp(tokens[0], "H") != 0) {
+        return false;
+    }
 
     int vals[NUM_FINGERS];
     for (int i = 0; i < NUM_FINGERS; i++) {
         char *end = NULL;
-        long v = strtol(tokens[i + 2], &end, 10);
-        if (!end || *end != '\0') return false;
+        long v = strtol(tokens[i + 1], &end, 10);
+        if (!end || *end != '\0') {
+            return false;
+        }
         vals[i] = clampi((int)v, 0, VMAX);
     }
 
     apply_values(&servo_dev, vals);
-    printf("MOVIMIENTO: [%d %d %d %d %d]\n", vals[0], vals[1], vals[2], vals[3], vals[4]);
+
+    printf("RX H,%d,%d,%d,%d,%d\n",
+           vals[0], vals[1], vals[2], vals[3], vals[4]);
     return true;
 }
 
-// --- CALLBACKS RED ---
-err_t tcp_server_recv(void *arg, struct tcp_pcb *tpcb, struct pbuf *p, err_t err) {
-    if (!p) { tcp_close(tpcb); return ERR_OK; }
+// --- CALLBACK UDP ---
+
+static void udp_server_recv(void *arg,
+                            struct udp_pcb *pcb,
+                            struct pbuf *p,
+                            const ip_addr_t *addr,
+                            u16_t port) {
+    if (!p) return;
 
     char buffer[128];
     u16_t len = p->len > 127 ? 127 : p->len;
     memcpy(buffer, p->payload, len);
-    buffer[len] = '\0'; 
+    buffer[len] = '\0';
 
-    printf("RX: %s\n", buffer);
-    
-    // Parseamos y movemos los servos
-    parse_and_execute(buffer);
+    packet_count++;
+    last_packet_ms = to_ms_since_boot(get_absolute_time());
 
-    // --- CORRECCIÓN AQUÍ ---
-    // Eliminamos el tcp_write("ACK"). 
-    // Esto evita que se llenen los buffers si el cliente no lee.
-    // tcp_write(tpcb, "ACK", 3, TCP_WRITE_FLAG_COPY); 
-    // -----------------------
+    bool ok = parse_and_execute(buffer);
 
-    tcp_recved(tpcb, p->tot_len);
+    printf("[PKT %lu] %s  (ok=%d)\n",
+           (unsigned long)packet_count,
+           buffer,
+           ok ? 1 : 0);
+
     pbuf_free(p);
-    return ERR_OK;
-}
-
-err_t tcp_server_accept(void *arg, struct tcp_pcb *newpcb, err_t err) {
-    printf("NUEVO CLIENTE CONECTADO!\n");
-    tcp_recv(newpcb, tcp_server_recv);
-    return ERR_OK;
 }
 
 // --- MAIN ---
+
 int main() {
     stdio_init_all();
-    sleep_ms(5000); 
-    printf("=== INICIANDO SISTEMA (SERVER V2) ===\n");
+    sleep_ms(3000);
+    printf("=== SERVER MANO (STA en hotspot iOS, UDP) ===\n");
 
-    // 1. INICIAR WI-FI PRIMERO (Prioridad Crítica)
-    // Así garantizamos que la red exista aunque los servos fallen
     if (cyw43_arch_init()) {
-        printf("ERROR FATAL: Fallo al iniciar hardware Wi-Fi\n");
+        printf("ERROR: cyw43_arch_init\n");
         return 1;
     }
-    
-    cyw43_arch_enable_ap_mode(AP_SSID, AP_PASSWORD, CYW43_AUTH_WPA2_AES_PSK);
 
-    struct netif *n = &cyw43_state.netif[CYW43_ITF_AP];
-    ip_addr_t ip, netmask, gateway;
-    IP4_ADDR(&ip, 192, 168, 4, 1);
-    IP4_ADDR(&netmask, 255, 255, 255, 0);
-    IP4_ADDR(&gateway, 192, 168, 4, 1);
-    netif_set_addr(n, &ip, &netmask, &gateway);
-    netif_set_up(n);
+    // Opcional: quitar powersave
+    cyw43_wifi_pm(&cyw43_state, CYW43_NO_POWERSAVE_MODE);
 
-    printf("--> RED WI-FI CREADA: %s\n", AP_SSID);
+    cyw43_arch_enable_sta_mode();
 
-    // 2. INICIAR SERVOS (Con protección)
-    printf("--> Iniciando I2C para Servos...\n");
+    printf("[WIFI] Conectando a SSID=%s ...\n", WIFI_SSID);
+    if (cyw43_arch_wifi_connect_timeout_ms(
+            WIFI_SSID, WIFI_PASSWORD,
+            CYW43_AUTH_WPA2_AES_PSK,
+            15000)) {
+        printf("[WIFI] No se pudo conectar al hotspot.\n");
+        return 1;
+    }
+    printf("[WIFI] Conectado al hotspot.\n");
+
+    // Imprimir IP que le dio el iPhone al server
+    struct netif *n = &cyw43_state.netif[CYW43_ITF_STA];
+    const ip4_addr_t *ip = netif_ip4_addr(n);
+    printf("[WIFI] IP SERVER (mano): %s\n", ip4addr_ntoa(ip));
+    printf("   -> Usa esta IP en SERVER_IP del cliente (guante)\n");
+
+    // Iniciar servos
+    printf("--> Iniciando I2C para servos...\n");
     bool servos_ok = servo_init(&servo_dev);
-    
     if (!servos_ok) {
-        printf("!!! ALERTA: No se detecta PCA9685. Revisa cables y energía !!!\n");
-        printf("    (El sistema seguira funcionando solo con Wi-Fi)\n");
-        // Marcamos frecuencia en 0 para evitar intentos de escritura
-        servo_dev.freq_hz = 0; 
+        printf("!!! NO PCA9685 detectado, solo Rx UDP !!!\n");
+        servo_dev.freq_hz = 0.0f;
     } else {
-        printf("--> Servos OK. Moviendo a Home.\n");
-        int v_init[NUM_FINGERS] = {0,0,0,0,0};
+        int v_init[NUM_FINGERS] = {0, 0, 0, 0, 0};
         apply_values(&servo_dev, v_init);
+        printf("--> Servos OK.\n");
     }
 
-    // 3. INICIAR TCP
-    struct tcp_pcb *pcb = tcp_new();
-    tcp_bind(pcb, IP_ADDR_ANY, TCP_PORT);
-    pcb = tcp_listen(pcb);
-    tcp_accept(pcb, tcp_server_accept);
+    // Crear servidor UDP
+    udp_server_pcb = udp_new_ip_type(IPADDR_TYPE_V4);
+    if (!udp_server_pcb) {
+        printf("ERROR: no se pudo crear PCB UDP\n");
+        return 1;
+    }
 
-    printf("--> Servidor escuchando en puerto %d\n", TCP_PORT);
-    printf("--> SISTEMA LISTO.\n");
+    err_t err = udp_bind(udp_server_pcb, IP_ANY_TYPE, UDP_PORT);
+    if (err != ERR_OK) {
+        printf("ERROR: udp_bind = %d\n", err);
+        udp_remove(udp_server_pcb);
+        return 1;
+    }
+
+    udp_recv(udp_server_pcb, udp_server_recv, NULL);
+    printf("--> Servidor UDP escuchando en puerto %d\n", UDP_PORT);
+
+    last_packet_ms = to_ms_since_boot(get_absolute_time());
+    uint32_t last_led_ms = last_packet_ms;
+    bool led_state = false;
 
     while (1) {
-        // Parpadeo lento para indicar vida
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
-        sleep_ms(500);
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
-        sleep_ms(500);
+        uint32_t now = to_ms_since_boot(get_absolute_time());
+
+        // LED heartbeat
+        if (now - last_led_ms > 500) {
+            last_led_ms = now;
+            led_state = !led_state;
+            cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, led_state);
+        }
+
+        // Solo para debug: avisar si pasan > 3s sin paquetes
+        if (now - last_packet_ms > 3000) {
+            printf("WARN: >3s sin paquetes UDP (packet_count=%lu)\n",
+                   (unsigned long)packet_count);
+            last_packet_ms = now; // para no spamear
+        }
+
+        sleep_ms(10);
     }
 }
