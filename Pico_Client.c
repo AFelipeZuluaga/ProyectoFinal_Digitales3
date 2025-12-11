@@ -1,122 +1,161 @@
+// Pico_Client.c
+
 #include <string.h>
 #include <stdio.h>
-#include <stdlib.h> // Necesario para rand()
+#include <stdlib.h>
+
 #include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
-#include "lwip/tcp.h"
+#include "lwip/udp.h"
 #include "hardware/watchdog.h"
 
-// --- CONFIGURACIÓN DE RED ---
-#define WIFI_SSID "MANO_ROBOTICA_NET"
-#define WIFI_PASSWORD "12345678"
-#define SERVER_IP "192.168.4.1"
-#define TCP_PORT 4242
+#include "lib/guante/guante.h"
 
-struct tcp_pcb *client_pcb;
-bool connected = false;
+// --- CONFIGURACIÓN RED (hotspot iOS) ---
+#define WIFI_SSID     "Apto 1516"
+#define WIFI_PASSWORD "SY15YRG3"
 
-// --- RED ---
-err_t tcp_client_connected(void *arg, struct tcp_pcb *tpcb, err_t err) {
-    if (err == ERR_OK) {
-        printf(">>> CONECTADO. Iniciando SIMULACION DE DATOS.\n");
-        connected = true;
-    } else {
-        printf("!!! Fallo conexión TCP (%d)\n", err);
-        connected = false;
+// OJO: PON AQUÍ LA IP QUE IMPRIME EL SERVER EN CONSOLA
+#define SERVER_IP     "172.20.10.6"   
+
+#define UDP_PORT      4242
+
+static struct udp_pcb *udp_client_pcb = NULL;
+static bool udp_ready = false;
+static uint32_t tx_packet_count = 0;
+
+// --- UDP ---
+
+static bool udp_client_connect(void) {
+    if (udp_client_pcb) {
+        udp_remove(udp_client_pcb);
+        udp_client_pcb = NULL;
     }
-    return err;
+
+    udp_client_pcb = udp_new_ip_type(IPADDR_TYPE_V4);
+    if (!udp_client_pcb) {
+        printf("[UDP] No se pudo crear udp_client_pcb\n");
+        return false;
+    }
+
+    ip_addr_t srv_ip;
+    ip4addr_aton(SERVER_IP, &srv_ip);
+
+    err_t err = udp_connect(udp_client_pcb, &srv_ip, UDP_PORT);
+    if (err != ERR_OK) {
+        printf("[UDP] Error en udp_connect: %d\n", err);
+        udp_remove(udp_client_pcb);
+        udp_client_pcb = NULL;
+        return false;
+    }
+
+    printf("[UDP] Conectado a %s:%d\n", SERVER_IP, UDP_PORT);
+    udp_ready = true;
+    return true;
 }
 
-void send_string(const char *data) {
-    if (!connected || client_pcb == NULL) return;
-    
-    err_t err = tcp_write(client_pcb, data, strlen(data), TCP_WRITE_FLAG_COPY);
-    if (err != ERR_OK) {
-        printf("Error enviando datos: %d\n", err);
-        connected = false; 
-    } else {
-        tcp_output(client_pcb);
+static void send_string(const char *data) {
+    if (!udp_ready || !udp_client_pcb) return;
+
+    size_t len = strlen(data);
+    struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, (u16_t)len, PBUF_RAM);
+    if (!p) {
+        printf("[UDP] Error: no se pudo allocar pbuf\n");
+        return;
     }
+
+    memcpy(p->payload, data, len);
+    err_t err = udp_send(udp_client_pcb, p);
+    if (err != ERR_OK) {
+        printf("[UDP] Error udp_send: %d\n", err);
+    }
+
+    pbuf_free(p);
 }
 
 // --- MAIN ---
+
 int main() {
     stdio_init_all();
-    sleep_ms(3000); 
-    printf("=== GUANTE WI-FI (MODO SIMULACION) ===\n");
+    sleep_ms(3000);
+    printf("=== GUANTE (CLIENTE UDP en hotspot iOS) ===\n");
 
-    // Inicializar semilla aleatoria (usamos tiempo o algo variable si es posible,
-    // pero para tests simples esto basta).
-    srand(time_us_32());
+    //watchdog_enable(8000, 1);
 
-    // 1. ACTIVAR WATCHDOG
-    watchdog_enable(8000, 1); 
-
-    // 2. INICIAR WI-FI
     if (cyw43_arch_init()) {
-        printf("Fallo Wi-Fi. Reiniciando...\n");
-        while(1); 
+        printf("ERROR: cyw43_arch_init\n");
+        while (1) tight_loop_contents();
     }
+
+    cyw43_wifi_pm(&cyw43_state, CYW43_NO_POWERSAVE_MODE);
     cyw43_arch_enable_sta_mode();
 
-    // IP Estática
-    struct netif *n = &cyw43_state.netif[CYW43_ITF_STA];
-    ip_addr_t ip, netmask, gateway;
-    IP4_ADDR(&ip, 192, 168, 4, 2);
-    IP4_ADDR(&netmask, 255, 255, 255, 0);
-    IP4_ADDR(&gateway, 192, 168, 4, 1);
-    netif_set_addr(n, &ip, &netmask, &gateway);
-    netif_set_up(n);
-
-    // Conexión Wi-Fi
-    printf("Conectando Wi-Fi...\n");
-    if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 15000)) {
-        printf("No se pudo conectar. Esperando reinicio...\n");
-        while(1); 
+    printf("[WIFI] Conectando a SSID=%s ...\n", WIFI_SSID);
+    if (cyw43_arch_wifi_connect_timeout_ms(
+            WIFI_SSID, WIFI_PASSWORD,
+            CYW43_AUTH_WPA2_AES_PSK,
+            15000)) {
+        printf("[WIFI] No se pudo conectar al hotspot.\n");
+        while (1) tight_loop_contents();
     }
-    printf("Wi-Fi OK.\n");
+    printf("[WIFI] Conectado al hotspot.\n");
 
-    // Conexión TCP
-    client_pcb = tcp_new();
-    tcp_bind(client_pcb, &ip, 0);
-    ip_addr_t server_ip;
-    ip4addr_aton(SERVER_IP, &server_ip);
-    tcp_connect(client_pcb, &server_ip, TCP_PORT, tcp_client_connected);
+    // Opcional: ver IP del guante
+    struct netif *n = &cyw43_state.netif[CYW43_ITF_STA];
+    const ip4_addr_t *ip = netif_ip4_addr(n);
+    printf("[WIFI] IP CLIENTE (guante): %s\n", ip4addr_ntoa(ip));
 
-    uint8_t seq = 0;
+    // Iniciar guante
+    if (!guante_init()) {
+        printf("[GUANTE] Error inicializando MUX/ADC.\n");
+    } else {
+        printf("[GUANTE] OK.\n");
+    }
+
+    // Conectar UDP al server
+    udp_ready = udp_client_connect();
+
     char buffer_trama[64];
+    uint32_t last_send_ms = to_ms_since_boot(get_absolute_time());
 
-    // --- BUCLE PRINCIPAL (SIMULACIÓN) ---
-    while (true) {
-        watchdog_update(); 
+    while (1) {
+        //watchdog_update();
 
-        if (connected) {
-            // Generar valores aleatorios entre 0 y 9
-            // Simulamos movimientos independientes para ver si el servo responde
-            int sim_val_0 = rand() % 10; // Simula Pulgar (o Indice tras el swap)
-            int sim_val_1 = rand() % 10; // Simula Indice (o Pulgar tras el swap)
-            int sim_val_2 = rand() % 10; // Simula Medio
-            
-            // Construimos la trama manteniendo TU lógica de SWAP original:
-            // Original: V0 recibe señal de ADC1 (Indice real -> V0 Robot)
-            //           V1 recibe señal de ADC0 (Pulgar real -> V1 Robot)
-            //           V2 recibe señal de ADC2 (Medio real  -> V2 Robot)
-            
-            snprintf(buffer_trama, sizeof(buffer_trama), 
-                     "H,%d,0,0,%d,%d,%d", 
-                     (int)seq, 
-                     sim_val_1,  // Slot V0: Asignamos valor aleatorio 1
-                     sim_val_0,  // Slot V1: Asignamos valor aleatorio 0
-                     sim_val_2); // Slot V2: Asignamos valor aleatorio 2
+        uint32_t now = to_ms_since_boot(get_absolute_time());
 
-            printf("TX SIMULADO: %s\n", buffer_trama);
+        // Enviar cada 250 ms
+        if (udp_ready && (now - last_send_ms >= 250)) {
+            last_send_ms = now;
+
+            uint8_t dedos[GUANTE_NUM_DEDOS];
+            guante_leer_dedos(dedos);
+
+            printf("GUANTE NORM: %u,%u,%u,%u,%u\n",
+                   dedos[0], dedos[1], dedos[2], dedos[3], dedos[4]);
+
+            int val0 = dedos[0]; // pulgar
+            int val1 = dedos[1]; // índice
+            int val2 = dedos[2]; // medio
+            int val3 = dedos[3]; // anular
+            int val4 = dedos[4]; // meñique
+
+            // Mantengo tu mapeo a trama:
+            snprintf(buffer_trama, sizeof(buffer_trama),
+                     "H,%d,%d,%d,%d,%d",
+                     val1,  // V0
+                     val0,  // V1
+                     val2,  // V2
+                     val3,  // V3
+                     val4); // V4
+
+            tx_packet_count++;
+            printf("TX[%lu] %s\n",
+                   (unsigned long)tx_packet_count,
+                   buffer_trama);
+
             send_string(buffer_trama);
-            seq++;
-        } else {
-            printf("Esperando conexión...\n");
         }
 
-        // Enviamos un poco más lento para ver claramente el movimiento (250ms)
-        sleep_ms(250);
+        sleep_ms(10);
     }
 }

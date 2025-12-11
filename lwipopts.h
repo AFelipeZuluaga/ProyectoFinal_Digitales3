@@ -25,6 +25,9 @@
 #define TCP_SND_BUF                 (8 * TCP_MSS)
 #define TCP_SND_QUEUELEN            ((4 * (TCP_SND_BUF) + (TCP_MSS - 1)) / (TCP_MSS))
 
+// --- Configuración UDP ---
+#define LWIP_UDP                    1
+
 // --- Configuración ARP y Ethernet ---
 #define LWIP_ARP                    1
 #define LWIP_ETHERNET               1
