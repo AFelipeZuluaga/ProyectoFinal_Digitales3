@@ -14,9 +14,9 @@
 #define SERVO_FREQ_HZ     50.0f
 
 /* Rango típico seguro SG90 */
-#define SERVO_US_MIN      800.0f
+#define SERVO_US_MIN      500.0f
 #define SERVO_US_CENTER   1500.0f
-#define SERVO_US_MAX      2200.0f
+#define SERVO_US_MAX      2500.0f
 
 typedef struct {
     i2c_inst_t *i2c;

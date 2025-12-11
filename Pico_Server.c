@@ -13,14 +13,15 @@
 #include "lib/servo/servo.h"
 
 // --- CONFIGURACIÓN WI-FI (STA en hotspot iOS) ---
-#define WIFI_SSID     "Mimic Hand net"
-#define WIFI_PASSWORD "12345678"
+#define WIFI_SSID     "iPhone de Felipe"
+#define WIFI_PASSWORD "ff11223344"
 #define UDP_PORT      4242
 
 // --- CONFIGURACIÓN MANO / SERVOS ---
 #define NUM_FINGERS         5
 #define VMAX                9          // valores esperados 0..9
 #define INVERT_FINGER_INDEX 4          // dedo invertido (si uno gira al revés)
+#define SENSOR_FLOOR 2
 
 static servo_pca_t servo_dev;
 static struct udp_pcb *udp_server_pcb = NULL;
@@ -37,10 +38,35 @@ static int clampi(int x, int a, int b) {
 }
 
 static float value_to_us(int finger_index, int v) {
+    // 1. Aseguramos que 'v' no exceda los límites lógicos
     v = clampi(v, 0, VMAX);
 
-    float norm = (float)v / (float)VMAX;  // 0.0 .. 1.0
+    // 2. Aplicamos la corrección de rango (Offset)
+    // Si llega un 0, 1 o 2, forzamos a que sea el mínimo.
+    int v_adjusted = v;
+    if (v_adjusted < SENSOR_FLOOR) {
+        v_adjusted = SENSOR_FLOOR;
+    }
 
+    // 3. Calculamos la norma sobre el "Rango Efectivo"
+    // El rango ya no es 0..9, sino 2..9 (un ancho de 7 pasos)
+    // Fórmula: (Valor - Piso) / (Max - Piso)
+    float range_span = (float)(VMAX - SENSOR_FLOOR); // 9 - 2 = 7
+    
+    // Evitamos división por cero por seguridad
+    if (range_span < 1.0f) range_span = 1.0f; 
+
+    float norm = ((float)v_adjusted - (float)SENSOR_FLOOR) / range_span;
+    // Ahora:
+    // Si v=2 -> (2-2)/7 = 0.0 (Cierre total)
+    // Si v=9 -> (9-2)/7 = 1.0 (Apertura total)
+
+    // 4. Inversión de lógica (lo que hicimos en el paso anterior)
+    // Para que 1.0 sea cerrar o abrir según necesites.
+    // Como pediste invertir: 
+    norm = 1.0f - norm;
+
+    // 5. Inversión por hardware específico (dedo montado al revés)
     if (finger_index == INVERT_FINGER_INDEX) {
         norm = 1.0f - norm;
     }
