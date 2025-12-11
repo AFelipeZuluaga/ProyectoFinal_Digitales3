@@ -12,11 +12,11 @@
 #include "lib/guante/guante.h"
 
 // --- CONFIGURACIÓN RED (hotspot iOS) ---
-#define WIFI_SSID     "Apto 1516"
-#define WIFI_PASSWORD "SY15YRG3"
+#define WIFI_SSID     "iPhone de Felipe"
+#define WIFI_PASSWORD "ff11223344"
 
 // OJO: PON AQUÍ LA IP QUE IMPRIME EL SERVER EN CONSOLA
-#define SERVER_IP     "172.20.10.6"   
+#define SERVER_IP     "172.20.10.2"   
 
 #define UDP_PORT      4242
 
@@ -142,11 +142,11 @@ int main() {
             // Mantengo tu mapeo a trama:
             snprintf(buffer_trama, sizeof(buffer_trama),
                      "H,%d,%d,%d,%d,%d",
-                     val1,  // V0
-                     val0,  // V1
+                     val4,  // V0
+                     val3,  // V1
                      val2,  // V2
-                     val3,  // V3
-                     val4); // V4
+                     val0,  // V3
+                     val1); // V4
 
             tx_packet_count++;
             printf("TX[%lu] %s\n",

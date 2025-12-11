@@ -23,7 +23,7 @@ static const long RAW_MAX = 3350;   // mano "cerrada" (imán lejos)
 
 // Rango de salida para la trama (0–7 para no reventar servos)
 static const long OUTPUT_MIN = 0;
-static const long OUTPUT_MAX = 7;
+static const long OUTPUT_MAX = 9;
 
 static bool guante_inicializado = false;
 
