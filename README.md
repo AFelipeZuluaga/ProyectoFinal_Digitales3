@@ -307,9 +307,3 @@ El proyecto combina explícitamente **polling** + **interrupciones**:
 Esta separación deja la lógica pesada (ADC, Wi-Fi, UDP, I²C, servos) fuera de las IRQ y cumple el requisito académico de usar ambos mecanismos.
 
 ---
-
-## 10. Créditos
-
-Proyecto desarrollado en C sobre Raspberry Pi Pico W, usando el Pico SDK,  
-el stack de red lwIP y el módulo Wi-Fi CYW43, con un enfoque en  
-teleoperación, comunicaciones embebidas y control de movimiento en tiempo real.
