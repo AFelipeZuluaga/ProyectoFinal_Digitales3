@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Mimic Hand Client: Referencia del archivo lwipopts.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Mimic Hand Client
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',false);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#define-members">defines</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo lwipopts.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Configuración de lwIP para la Raspberry Pi Pico W en modo sin RTOS.  
+<a href="#details">Más...</a></p>
+
+<p><a href="lwipopts_8h_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:ae00ba99de94a5bf84d832be8976df59b" id="r_ae00ba99de94a5bf84d832be8976df59b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae00ba99de94a5bf84d832be8976df59b">NO_SYS</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ae00ba99de94a5bf84d832be8976df59b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modo sin sistema operativo (Raw API).  <br /></td></tr>
+<tr class="memitem:a1cb62ce61ac39d7d6728ae5d3d3b927f" id="r_a1cb62ce61ac39d7d6728ae5d3d3b927f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1cb62ce61ac39d7d6728ae5d3d3b927f">LWIP_SOCKET</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a1cb62ce61ac39d7d6728ae5d3d3b927f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita la API de sockets de lwIP.  <br /></td></tr>
+<tr class="memitem:a478041b8544461258f6961bf0f3c1a77" id="r_a478041b8544461258f6961bf0f3c1a77"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a478041b8544461258f6961bf0f3c1a77">LWIP_NETCONN</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a478041b8544461258f6961bf0f3c1a77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita la API Netconn de lwIP.  <br /></td></tr>
+<tr class="memitem:adaf25915ae1fd69c0943ef68cbb38923" id="r_adaf25915ae1fd69c0943ef68cbb38923"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adaf25915ae1fd69c0943ef68cbb38923">LWIP_IGMP</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:adaf25915ae1fd69c0943ef68cbb38923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deshabilita soporte IGMP (no se usan grupos multicast).  <br /></td></tr>
+<tr class="memitem:ae4d45345c3ab8e5a355fda1d8d24fca6" id="r_ae4d45345c3ab8e5a355fda1d8d24fca6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4d45345c3ab8e5a355fda1d8d24fca6">LWIP_ICMP</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ae4d45345c3ab8e5a355fda1d8d24fca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita ICMP (por ejemplo, respuestas a ping).  <br /></td></tr>
+<tr class="memitem:a4ef345cc270912bd2230b1c5ec51dfc8" id="r_a4ef345cc270912bd2230b1c5ec51dfc8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ef345cc270912bd2230b1c5ec51dfc8">MEM_LIBC_MALLOC</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:a4ef345cc270912bd2230b1c5ec51dfc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Usa el gestor de memoria interno de lwIP (no malloc de libc).  <br /></td></tr>
+<tr class="memitem:a97343214666ee6dcb18c0bd77b441ea7" id="r_a97343214666ee6dcb18c0bd77b441ea7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97343214666ee6dcb18c0bd77b441ea7">MEM_ALIGNMENT</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:a97343214666ee6dcb18c0bd77b441ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alineación de memoria (en bytes).  <br /></td></tr>
+<tr class="memitem:a2dcf8c45f945dd0c4301a94700f2112c" id="r_a2dcf8c45f945dd0c4301a94700f2112c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dcf8c45f945dd0c4301a94700f2112c">MEM_SIZE</a>&#160;&#160;&#160;4000</td></tr>
+<tr class="memdesc:a2dcf8c45f945dd0c4301a94700f2112c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tamaño del heap interno de lwIP (en bytes).  <br /></td></tr>
+<tr class="memitem:aa35fb3a1a76661e3ffb9722a57092de3" id="r_aa35fb3a1a76661e3ffb9722a57092de3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa35fb3a1a76661e3ffb9722a57092de3">MEMP_NUM_TCP_SEG</a>&#160;&#160;&#160;32</td></tr>
+<tr class="memdesc:aa35fb3a1a76661e3ffb9722a57092de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de segmentos TCP disponibles.  <br /></td></tr>
+<tr class="memitem:a087b00ea20a7edebcad33a1a1353a5d7" id="r_a087b00ea20a7edebcad33a1a1353a5d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a087b00ea20a7edebcad33a1a1353a5d7">MEMP_NUM_ARP_QUEUE</a>&#160;&#160;&#160;10</td></tr>
+<tr class="memdesc:a087b00ea20a7edebcad33a1a1353a5d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de entradas en la cola ARP.  <br /></td></tr>
+<tr class="memitem:a50eaadc4cad0716410332691e382c38a" id="r_a50eaadc4cad0716410332691e382c38a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a50eaadc4cad0716410332691e382c38a">PBUF_POOL_SIZE</a>&#160;&#160;&#160;24</td></tr>
+<tr class="memdesc:a50eaadc4cad0716410332691e382c38a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tamaño del pool de pbufs para RX/TX.  <br /></td></tr>
+<tr class="memitem:aa4ed98deb97b77c633cb8870f34c71e9" id="r_aa4ed98deb97b77c633cb8870f34c71e9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4ed98deb97b77c633cb8870f34c71e9">LWIP_TCP</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:aa4ed98deb97b77c633cb8870f34c71e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita soporte TCP en la pila lwIP.  <br /></td></tr>
+<tr class="memitem:af1ab7bb27860aa3677c387a2f3ba317b" id="r_af1ab7bb27860aa3677c387a2f3ba317b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a>&#160;&#160;&#160;1460</td></tr>
+<tr class="memdesc:af1ab7bb27860aa3677c387a2f3ba317b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tamaño máximo de segmento TCP (MSS).  <br /></td></tr>
+<tr class="memitem:a7f535a6efb5cdf86c3210e35ece1d6a7" id="r_a7f535a6efb5cdf86c3210e35ece1d6a7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f535a6efb5cdf86c3210e35ece1d6a7">TCP_WND</a>&#160;&#160;&#160;(8 * <a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a>)</td></tr>
+<tr class="memdesc:a7f535a6efb5cdf86c3210e35ece1d6a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tamaño de la ventana TCP.  <br /></td></tr>
+<tr class="memitem:a871d111968d8c6c7880ff36b93c5c4dd" id="r_a871d111968d8c6c7880ff36b93c5c4dd"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a871d111968d8c6c7880ff36b93c5c4dd">TCP_SND_BUF</a>&#160;&#160;&#160;(8 * <a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a>)</td></tr>
+<tr class="memdesc:a871d111968d8c6c7880ff36b93c5c4dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tamaño del buffer de envío TCP.  <br /></td></tr>
+<tr class="memitem:a9beaa47832ead4180981bfbf71074904" id="r_a9beaa47832ead4180981bfbf71074904"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9beaa47832ead4180981bfbf71074904">TCP_SND_QUEUELEN</a>&#160;&#160;&#160;((4 * (<a class="el" href="#a871d111968d8c6c7880ff36b93c5c4dd">TCP_SND_BUF</a>) + (<a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a> - 1)) / (<a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a>))</td></tr>
+<tr class="memdesc:a9beaa47832ead4180981bfbf71074904"><td class="mdescLeft">&#160;</td><td class="mdescRight">Longitud de la cola de segmentos TCP listos para envío.  <br /></td></tr>
+<tr class="memitem:ab6030e96e72df649d2650fd32d7a67b3" id="r_ab6030e96e72df649d2650fd32d7a67b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6030e96e72df649d2650fd32d7a67b3">LWIP_UDP</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:ab6030e96e72df649d2650fd32d7a67b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita soporte UDP en la pila lwIP.  <br /></td></tr>
+<tr class="memitem:a9609a014bba4638cc191d6a8f9556c87" id="r_a9609a014bba4638cc191d6a8f9556c87"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9609a014bba4638cc191d6a8f9556c87">LWIP_ARP</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a9609a014bba4638cc191d6a8f9556c87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita la caché ARP.  <br /></td></tr>
+<tr class="memitem:a30e02dc217cc2995d0fd241d510c904f" id="r_a30e02dc217cc2995d0fd241d510c904f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30e02dc217cc2995d0fd241d510c904f">LWIP_ETHERNET</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a30e02dc217cc2995d0fd241d510c904f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indica que se usa interfaz Ethernet (base para Wi-Fi).  <br /></td></tr>
+<tr class="memitem:a8a6ec62dc121064ac591b1fd8567bee9" id="r_a8a6ec62dc121064ac591b1fd8567bee9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a6ec62dc121064ac591b1fd8567bee9">LWIP_DHCP</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:a8a6ec62dc121064ac591b1fd8567bee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Habilita el cliente DHCP para obtener IP automáticamente.  <br /></td></tr>
+<tr class="memitem:a77370c377781ee7489e30eaf772ea05a" id="r_a77370c377781ee7489e30eaf772ea05a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77370c377781ee7489e30eaf772ea05a">LWIP_RAND</a>()</td></tr>
+<tr class="memdesc:a77370c377781ee7489e30eaf772ea05a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generador de números aleatorios para lwIP.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Configuración de lwIP para la Raspberry Pi Pico W en modo sin RTOS. </p>
+<p>Define parámetros de memoria, TCP/UDP, ARP y opciones de integración específicas para el uso de la Raw API en este proyecto. </p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentación de «define»</h2>
+<a id="a9609a014bba4638cc191d6a8f9556c87" name="a9609a014bba4638cc191d6a8f9556c87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9609a014bba4638cc191d6a8f9556c87">&#9670;&#160;</a></span>LWIP_ARP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_ARP&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita la caché ARP. </p>
+
+</div>
+</div>
+<a id="a8a6ec62dc121064ac591b1fd8567bee9" name="a8a6ec62dc121064ac591b1fd8567bee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a6ec62dc121064ac591b1fd8567bee9">&#9670;&#160;</a></span>LWIP_DHCP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_DHCP&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita el cliente DHCP para obtener IP automáticamente. </p>
+
+</div>
+</div>
+<a id="a30e02dc217cc2995d0fd241d510c904f" name="a30e02dc217cc2995d0fd241d510c904f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30e02dc217cc2995d0fd241d510c904f">&#9670;&#160;</a></span>LWIP_ETHERNET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_ETHERNET&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Indica que se usa interfaz Ethernet (base para Wi-Fi). </p>
+
+</div>
+</div>
+<a id="ae4d45345c3ab8e5a355fda1d8d24fca6" name="ae4d45345c3ab8e5a355fda1d8d24fca6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4d45345c3ab8e5a355fda1d8d24fca6">&#9670;&#160;</a></span>LWIP_ICMP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_ICMP&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita ICMP (por ejemplo, respuestas a ping). </p>
+
+</div>
+</div>
+<a id="adaf25915ae1fd69c0943ef68cbb38923" name="adaf25915ae1fd69c0943ef68cbb38923"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaf25915ae1fd69c0943ef68cbb38923">&#9670;&#160;</a></span>LWIP_IGMP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_IGMP&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita soporte IGMP (no se usan grupos multicast). </p>
+
+</div>
+</div>
+<a id="a478041b8544461258f6961bf0f3c1a77" name="a478041b8544461258f6961bf0f3c1a77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a478041b8544461258f6961bf0f3c1a77">&#9670;&#160;</a></span>LWIP_NETCONN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_NETCONN&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita la API Netconn de lwIP. </p>
+
+</div>
+</div>
+<a id="a77370c377781ee7489e30eaf772ea05a" name="a77370c377781ee7489e30eaf772ea05a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77370c377781ee7489e30eaf772ea05a">&#9670;&#160;</a></span>LWIP_RAND</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_RAND</td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor:</b><div class="fragment"><div class="line">((u32_t)rand())</div>
+</div><!-- fragment -->
+<p>Generador de números aleatorios para lwIP. </p>
+<p>Usa la función estándar rand() de C como fuente de aleatoriedad. </p>
+
+</div>
+</div>
+<a id="a1cb62ce61ac39d7d6728ae5d3d3b927f" name="a1cb62ce61ac39d7d6728ae5d3d3b927f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cb62ce61ac39d7d6728ae5d3d3b927f">&#9670;&#160;</a></span>LWIP_SOCKET</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_SOCKET&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deshabilita la API de sockets de lwIP. </p>
+
+</div>
+</div>
+<a id="aa4ed98deb97b77c633cb8870f34c71e9" name="aa4ed98deb97b77c633cb8870f34c71e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4ed98deb97b77c633cb8870f34c71e9">&#9670;&#160;</a></span>LWIP_TCP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_TCP&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita soporte TCP en la pila lwIP. </p>
+
+</div>
+</div>
+<a id="ab6030e96e72df649d2650fd32d7a67b3" name="ab6030e96e72df649d2650fd32d7a67b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6030e96e72df649d2650fd32d7a67b3">&#9670;&#160;</a></span>LWIP_UDP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define LWIP_UDP&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Habilita soporte UDP en la pila lwIP. </p>
+
+</div>
+</div>
+<a id="a97343214666ee6dcb18c0bd77b441ea7" name="a97343214666ee6dcb18c0bd77b441ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97343214666ee6dcb18c0bd77b441ea7">&#9670;&#160;</a></span>MEM_ALIGNMENT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MEM_ALIGNMENT&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Alineación de memoria (en bytes). </p>
+
+</div>
+</div>
+<a id="a4ef345cc270912bd2230b1c5ec51dfc8" name="a4ef345cc270912bd2230b1c5ec51dfc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ef345cc270912bd2230b1c5ec51dfc8">&#9670;&#160;</a></span>MEM_LIBC_MALLOC</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MEM_LIBC_MALLOC&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Usa el gestor de memoria interno de lwIP (no malloc de libc). </p>
+
+</div>
+</div>
+<a id="a2dcf8c45f945dd0c4301a94700f2112c" name="a2dcf8c45f945dd0c4301a94700f2112c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dcf8c45f945dd0c4301a94700f2112c">&#9670;&#160;</a></span>MEM_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MEM_SIZE&#160;&#160;&#160;4000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tamaño del heap interno de lwIP (en bytes). </p>
+
+</div>
+</div>
+<a id="a087b00ea20a7edebcad33a1a1353a5d7" name="a087b00ea20a7edebcad33a1a1353a5d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a087b00ea20a7edebcad33a1a1353a5d7">&#9670;&#160;</a></span>MEMP_NUM_ARP_QUEUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MEMP_NUM_ARP_QUEUE&#160;&#160;&#160;10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Número de entradas en la cola ARP. </p>
+
+</div>
+</div>
+<a id="aa35fb3a1a76661e3ffb9722a57092de3" name="aa35fb3a1a76661e3ffb9722a57092de3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa35fb3a1a76661e3ffb9722a57092de3">&#9670;&#160;</a></span>MEMP_NUM_TCP_SEG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MEMP_NUM_TCP_SEG&#160;&#160;&#160;32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Número de segmentos TCP disponibles. </p>
+
+</div>
+</div>
+<a id="ae00ba99de94a5bf84d832be8976df59b" name="ae00ba99de94a5bf84d832be8976df59b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00ba99de94a5bf84d832be8976df59b">&#9670;&#160;</a></span>NO_SYS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NO_SYS&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Modo sin sistema operativo (Raw API). </p>
+<p>NO_SYS = 1 indica que lwIP se ejecuta sin RTOS, usando la Raw API. </p>
+
+</div>
+</div>
+<a id="a50eaadc4cad0716410332691e382c38a" name="a50eaadc4cad0716410332691e382c38a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50eaadc4cad0716410332691e382c38a">&#9670;&#160;</a></span>PBUF_POOL_SIZE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PBUF_POOL_SIZE&#160;&#160;&#160;24</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tamaño del pool de pbufs para RX/TX. </p>
+
+</div>
+</div>
+<a id="af1ab7bb27860aa3677c387a2f3ba317b" name="af1ab7bb27860aa3677c387a2f3ba317b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1ab7bb27860aa3677c387a2f3ba317b">&#9670;&#160;</a></span>TCP_MSS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TCP_MSS&#160;&#160;&#160;1460</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tamaño máximo de segmento TCP (MSS). </p>
+
+</div>
+</div>
+<a id="a871d111968d8c6c7880ff36b93c5c4dd" name="a871d111968d8c6c7880ff36b93c5c4dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a871d111968d8c6c7880ff36b93c5c4dd">&#9670;&#160;</a></span>TCP_SND_BUF</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TCP_SND_BUF&#160;&#160;&#160;(8 * <a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tamaño del buffer de envío TCP. </p>
+
+</div>
+</div>
+<a id="a9beaa47832ead4180981bfbf71074904" name="a9beaa47832ead4180981bfbf71074904"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9beaa47832ead4180981bfbf71074904">&#9670;&#160;</a></span>TCP_SND_QUEUELEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TCP_SND_QUEUELEN&#160;&#160;&#160;((4 * (<a class="el" href="#a871d111968d8c6c7880ff36b93c5c4dd">TCP_SND_BUF</a>) + (<a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a> - 1)) / (<a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a>))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Longitud de la cola de segmentos TCP listos para envío. </p>
+
+</div>
+</div>
+<a id="a7f535a6efb5cdf86c3210e35ece1d6a7" name="a7f535a6efb5cdf86c3210e35ece1d6a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f535a6efb5cdf86c3210e35ece1d6a7">&#9670;&#160;</a></span>TCP_WND</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TCP_WND&#160;&#160;&#160;(8 * <a class="el" href="#af1ab7bb27860aa3677c387a2f3ba317b">TCP_MSS</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tamaño de la ventana TCP. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>

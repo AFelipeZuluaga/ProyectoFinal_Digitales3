@@ -1,0 +1,160 @@
+\doxysection{Referencia del archivo C\+:/\+Users/luisc/\+Desktop/\+Mimic Hand 2/\+Pico\+\_\+\+Server/\+Pico\+\_\+\+Server.c}
+\hypertarget{_pico___server_8c}{}\label{_pico___server_8c}\index{C:/Users/luisc/Desktop/Mimic Hand 2/Pico\_Server/Pico\_Server.c@{C:/Users/luisc/Desktop/Mimic Hand 2/Pico\_Server/Pico\_Server.c}}
+
+
+Servidor UDP para controlar una mano robótica con la Raspberry Pi Pico W.  
+
+
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}pico/stdlib.\+h"{}}\newline
+{\ttfamily \#include "{}pico/cyw43\+\_\+arch.\+h"{}}\newline
+{\ttfamily \#include "{}lwip/udp.\+h"{}}\newline
+{\ttfamily \#include "{}lwip/pbuf.\+h"{}}\newline
+{\ttfamily \#include "{}hardware/timer.\+h"{}}\newline
+{\ttfamily \#include "{}lib/servo/servo.\+h"{}}\newline
+\doxysubsubsection*{defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_pico___server_8c_a586542b79d00e4db7e1d5a667ae83a2b}{WIFI\+\_\+\+SSID}}~"{}i\+Phone de Felipe"{}
+\begin{DoxyCompactList}\small\item\em SSID de la red Wi-\/\+Fi (hotspot) a la que se conecta la Pico W. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_pico___server_8c_a8685d8aff7e570048090a3a51afceb07}{WIFI\+\_\+\+PASSWORD}}~"{}ff11223344"{}
+\begin{DoxyCompactList}\small\item\em Contraseña de la red Wi-\/\+Fi (hotspot). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_pico___server_8c_a7342deb9bd9ebf195e550e2d8e7c38b4}{UDP\+\_\+\+PORT}}~4242
+\begin{DoxyCompactList}\small\item\em Puerto UDP en el que escucha el servidor de la mano. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_pico___server_8c_aecd0afce4ee29b41810d1184887f73d5}{NUM\+\_\+\+FINGERS}}~5
+\begin{DoxyCompactList}\small\item\em Número de dedos controlados por la mano robótica. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_pico___server_8c_aff4b1376965cfdb32a775db8565d2540}{VMAX}}~9
+\begin{DoxyCompactList}\small\item\em Valor máximo esperado desde el guante (rango efectivo). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_pico___server_8c_a1b9e821ed46d85bae53c498bca6dbffe}{SENSOR\+\_\+\+FLOOR}}~2
+\begin{DoxyCompactList}\small\item\em Umbral mínimo del sensor para filtrar ruido. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{_pico___server_8c_a46766810051a078151b66697287cf873}{INVERT\+\_\+\+FINGER\+\_\+\+INDEX}}~4
+\begin{DoxyCompactList}\small\item\em Índice de dedo cuyo movimiento debe invertirse por montaje físico. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{_pico___server_8c_adc34f9a1088ae8461f5b82d18832958b}{heartbeat\+\_\+timer\+\_\+callback}} (struct repeating\+\_\+timer \texorpdfstring{$\ast$}{*}t)
+\begin{DoxyCompactList}\small\item\em Callback periódico del timer para generar un "{}heartbeat"{} con el LED. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{_pico___server_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\begin{DoxyCompactList}\small\item\em Punto de entrada del servidor de la mano robótica. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Servidor UDP para controlar una mano robótica con la Raspberry Pi Pico W. 
+
+Recibe tramas desde un guante con sensores Hall vía Wi-\/\+Fi (UDP) y actualiza los servomotores de cada dedo usando un PCA9685. 
+
+\label{doc-define-members}
+\Hypertarget{_pico___server_8c_doc-define-members}
+\doxysubsection{Documentación de «define»}
+\Hypertarget{_pico___server_8c_a46766810051a078151b66697287cf873}\index{Pico\_Server.c@{Pico\_Server.c}!INVERT\_FINGER\_INDEX@{INVERT\_FINGER\_INDEX}}
+\index{INVERT\_FINGER\_INDEX@{INVERT\_FINGER\_INDEX}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{INVERT\_FINGER\_INDEX}{INVERT\_FINGER\_INDEX}}
+{\footnotesize\ttfamily \label{_pico___server_8c_a46766810051a078151b66697287cf873} 
+\#define INVERT\+\_\+\+FINGER\+\_\+\+INDEX~4}
+
+
+
+Índice de dedo cuyo movimiento debe invertirse por montaje físico. 
+
+\Hypertarget{_pico___server_8c_aecd0afce4ee29b41810d1184887f73d5}\index{Pico\_Server.c@{Pico\_Server.c}!NUM\_FINGERS@{NUM\_FINGERS}}
+\index{NUM\_FINGERS@{NUM\_FINGERS}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{NUM\_FINGERS}{NUM\_FINGERS}}
+{\footnotesize\ttfamily \label{_pico___server_8c_aecd0afce4ee29b41810d1184887f73d5} 
+\#define NUM\+\_\+\+FINGERS~5}
+
+
+
+Número de dedos controlados por la mano robótica. 
+
+\Hypertarget{_pico___server_8c_a1b9e821ed46d85bae53c498bca6dbffe}\index{Pico\_Server.c@{Pico\_Server.c}!SENSOR\_FLOOR@{SENSOR\_FLOOR}}
+\index{SENSOR\_FLOOR@{SENSOR\_FLOOR}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{SENSOR\_FLOOR}{SENSOR\_FLOOR}}
+{\footnotesize\ttfamily \label{_pico___server_8c_a1b9e821ed46d85bae53c498bca6dbffe} 
+\#define SENSOR\+\_\+\+FLOOR~2}
+
+
+
+Umbral mínimo del sensor para filtrar ruido. 
+
+\Hypertarget{_pico___server_8c_a7342deb9bd9ebf195e550e2d8e7c38b4}\index{Pico\_Server.c@{Pico\_Server.c}!UDP\_PORT@{UDP\_PORT}}
+\index{UDP\_PORT@{UDP\_PORT}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{UDP\_PORT}{UDP\_PORT}}
+{\footnotesize\ttfamily \label{_pico___server_8c_a7342deb9bd9ebf195e550e2d8e7c38b4} 
+\#define UDP\+\_\+\+PORT~4242}
+
+
+
+Puerto UDP en el que escucha el servidor de la mano. 
+
+\Hypertarget{_pico___server_8c_aff4b1376965cfdb32a775db8565d2540}\index{Pico\_Server.c@{Pico\_Server.c}!VMAX@{VMAX}}
+\index{VMAX@{VMAX}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{VMAX}{VMAX}}
+{\footnotesize\ttfamily \label{_pico___server_8c_aff4b1376965cfdb32a775db8565d2540} 
+\#define VMAX~9}
+
+
+
+Valor máximo esperado desde el guante (rango efectivo). 
+
+\Hypertarget{_pico___server_8c_a8685d8aff7e570048090a3a51afceb07}\index{Pico\_Server.c@{Pico\_Server.c}!WIFI\_PASSWORD@{WIFI\_PASSWORD}}
+\index{WIFI\_PASSWORD@{WIFI\_PASSWORD}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{WIFI\_PASSWORD}{WIFI\_PASSWORD}}
+{\footnotesize\ttfamily \label{_pico___server_8c_a8685d8aff7e570048090a3a51afceb07} 
+\#define WIFI\+\_\+\+PASSWORD~"{}ff11223344"{}}
+
+
+
+Contraseña de la red Wi-\/\+Fi (hotspot). 
+
+\Hypertarget{_pico___server_8c_a586542b79d00e4db7e1d5a667ae83a2b}\index{Pico\_Server.c@{Pico\_Server.c}!WIFI\_SSID@{WIFI\_SSID}}
+\index{WIFI\_SSID@{WIFI\_SSID}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{WIFI\_SSID}{WIFI\_SSID}}
+{\footnotesize\ttfamily \label{_pico___server_8c_a586542b79d00e4db7e1d5a667ae83a2b} 
+\#define WIFI\+\_\+\+SSID~"{}i\+Phone de Felipe"{}}
+
+
+
+SSID de la red Wi-\/\+Fi (hotspot) a la que se conecta la Pico W. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{_pico___server_8c_doc-func-members}
+\doxysubsection{Documentación de funciones}
+\Hypertarget{_pico___server_8c_adc34f9a1088ae8461f5b82d18832958b}\index{Pico\_Server.c@{Pico\_Server.c}!heartbeat\_timer\_callback@{heartbeat\_timer\_callback}}
+\index{heartbeat\_timer\_callback@{heartbeat\_timer\_callback}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{heartbeat\_timer\_callback()}{heartbeat\_timer\_callback()}}
+{\footnotesize\ttfamily \label{_pico___server_8c_adc34f9a1088ae8461f5b82d18832958b} 
+bool heartbeat\+\_\+timer\+\_\+callback (\begin{DoxyParamCaption}\item[{struct repeating\+\_\+timer \texorpdfstring{$\ast$}{*}}]{t}{}\end{DoxyParamCaption})}
+
+
+
+Callback periódico del timer para generar un "{}heartbeat"{} con el LED. 
+
+Parpadea el LED de la Pico W para indicar que el sistema está en ejecución.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em t} & Puntero al temporizador que generó la interrupción. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+true para mantener el temporizador repitiéndose. 
+\end{DoxyReturn}
+\Hypertarget{_pico___server_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\index{Pico\_Server.c@{Pico\_Server.c}!main@{main}}
+\index{main@{main}!Pico\_Server.c@{Pico\_Server.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{_pico___server_8c_ae66f6b31b5ad750f1fe042a706a4e3d4} 
+int main (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Punto de entrada del servidor de la mano robótica. 
+
+Inicializa UART/\+STDIO, Wi-\/\+Fi, el controlador de servos, configura el servidor UDP y un timer de heartbeat. En el bucle principal, realiza polling de Wi-\/\+Fi y aplica nuevos valores de dedos cuando llegan tramas válidas.
+
+\begin{DoxyReturn}{Devuelve}
+0 en funcionamiento normal, 1 en caso de error de inicialización. 
+\end{DoxyReturn}

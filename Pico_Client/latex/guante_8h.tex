@@ -1,0 +1,88 @@
+\doxysection{Referencia del archivo lib/guante/guante.h}
+\hypertarget{guante_8h}{}\label{guante_8h}\index{lib/guante/guante.h@{lib/guante/guante.h}}
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\doxysubsubsection*{defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{guante_8h_a4227bfbd3d3e1b5a7e3c31d3012b6681}{GUANTE\+\_\+\+NUM\+\_\+\+DEDOS}}~5
+\begin{DoxyCompactList}\small\item\em Número total de dedos leídos por el guante. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{guante_8h_a57435129a0bd0b526eb8df8a6de1b053}{guante\+\_\+init}} (void)
+\begin{DoxyCompactList}\small\item\em Inicializa el hardware del guante. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{guante_8h_a26ffa311531be536152bf9a06c34aca8}{guante\+\_\+leer\+\_\+dedos}} (uint8\+\_\+t out\mbox{[}\mbox{\hyperlink{guante_8h_a4227bfbd3d3e1b5a7e3c31d3012b6681}{GUANTE\+\_\+\+NUM\+\_\+\+DEDOS}}\mbox{]})
+\begin{DoxyCompactList}\small\item\em Lee los 5 sensores del guante y entrega valores normalizados. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{guante_8h_doc-define-members}
+\doxysubsection{Documentación de «define»}
+\Hypertarget{guante_8h_a4227bfbd3d3e1b5a7e3c31d3012b6681}\index{guante.h@{guante.h}!GUANTE\_NUM\_DEDOS@{GUANTE\_NUM\_DEDOS}}
+\index{GUANTE\_NUM\_DEDOS@{GUANTE\_NUM\_DEDOS}!guante.h@{guante.h}}
+\doxysubsubsection{\texorpdfstring{GUANTE\_NUM\_DEDOS}{GUANTE\_NUM\_DEDOS}}
+{\footnotesize\ttfamily \label{guante_8h_a4227bfbd3d3e1b5a7e3c31d3012b6681} 
+\#define GUANTE\+\_\+\+NUM\+\_\+\+DEDOS~5}
+
+
+
+Número total de dedos leídos por el guante. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{guante_8h_doc-func-members}
+\doxysubsection{Documentación de funciones}
+\Hypertarget{guante_8h_a57435129a0bd0b526eb8df8a6de1b053}\index{guante.h@{guante.h}!guante\_init@{guante\_init}}
+\index{guante\_init@{guante\_init}!guante.h@{guante.h}}
+\doxysubsubsection{\texorpdfstring{guante\_init()}{guante\_init()}}
+{\footnotesize\ttfamily \label{guante_8h_a57435129a0bd0b526eb8df8a6de1b053} 
+bool guante\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{}{}\end{DoxyParamCaption})}
+
+
+
+Inicializa el hardware del guante. 
+
+Configura el multiplexor (líneas A, B, C) y el ADC0 (GPIO26) para poder leer los sensores Hall de los dedos.
+
+\begin{DoxyReturn}{Devuelve}
+true si la inicialización fue correcta, false en caso de error.
+\end{DoxyReturn}
+Inicializa el hardware del guante.
+
+Configura las líneas A/\+B/C del MUX como salidas y el ADC0 sobre GPIO26. Solo hace la inicialización una vez.
+
+\begin{DoxyReturn}{Devuelve}
+true si la inicialización se realizó correctamente. 
+\end{DoxyReturn}
+\Hypertarget{guante_8h_a26ffa311531be536152bf9a06c34aca8}\index{guante.h@{guante.h}!guante\_leer\_dedos@{guante\_leer\_dedos}}
+\index{guante\_leer\_dedos@{guante\_leer\_dedos}!guante.h@{guante.h}}
+\doxysubsubsection{\texorpdfstring{guante\_leer\_dedos()}{guante\_leer\_dedos()}}
+{\footnotesize\ttfamily \label{guante_8h_a26ffa311531be536152bf9a06c34aca8} 
+void guante\+\_\+leer\+\_\+dedos (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{out}{\mbox{[}\+GUANTE\+\_\+\+NUM\+\_\+\+DEDOS\mbox{]}}\end{DoxyParamCaption})}
+
+
+
+Lee los 5 sensores del guante y entrega valores normalizados. 
+
+Obtiene una lectura por cada dedo y devuelve valores en el rango 0–7 en el siguiente orden dentro del arreglo\+: out\mbox{[}0\mbox{]} -\/\texorpdfstring{$>$}{>} Pulgar (canal 0) ~\newline
+ out\mbox{[}1\mbox{]} -\/\texorpdfstring{$>$}{>} Índice (canal 1) ~\newline
+ out\mbox{[}2\mbox{]} -\/\texorpdfstring{$>$}{>} Medio (canal 2) ~\newline
+ out\mbox{[}3\mbox{]} -\/\texorpdfstring{$>$}{>} Anular (canal 3) ~\newline
+ out\mbox{[}4\mbox{]} -\/\texorpdfstring{$>$}{>} Meñique (canal 4)
+
+
+\begin{DoxyParams}[1]{Parámetros}
+\mbox{\texttt{out}}  & {\em out} & Arreglo de tamaño GUANTE\+\_\+\+NUM\+\_\+\+DEDOS con los valores de cada dedo.\\
+\hline
+\end{DoxyParams}
+Lee los 5 sensores del guante y entrega valores normalizados.
+
+Recorre los canales del MUX, lee el ADC, mapea los valores crudos a un rango 0–9 y los escribe en el arreglo de salida.
+
+
+\begin{DoxyParams}[1]{Parámetros}
+\mbox{\texttt{out}}  & {\em out} & Arreglo de tamaño GUANTE\+\_\+\+NUM\+\_\+\+DEDOS con el valor de cada dedo. \\
+\hline
+\end{DoxyParams}

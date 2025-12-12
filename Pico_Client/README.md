@@ -1,0 +1,4 @@
+# Pico_Client
+Este módulo implementa el lado cliente del sistema Mimic Hand: el guante instrumentado. Su función es leer la flexión de los dedos mediante sensores Hall (a través de un multiplexor y el ADC de la Pico W), normalizar esas lecturas a valores discretos en el rango 0–9 y empaquetarlas en una trama del tipo H,v0,v1,v2,v3,v4 que se envía periódicamente al servidor por UDP. Así, el guante convierte los movimientos de la mano del usuario en datos simples y compactos que la mano robótica puede interpretar.
+
+El cliente se conecta como STA al mismo hotspot Wi-Fi que la mano robótica y envía las tramas al puerto fijo del servidor (por ejemplo, 4242). Para cumplir con el esquema polling + IRQ, se utiliza un repeating_timer en interrupción que solo marca el instante de muestreo (levantando una bandera), mientras que el bucle principal se encarga de avanzar la pila de red (cyw43_arch_poll()), leer los sensores cuando corresponde, construir la trama y transmitirla.

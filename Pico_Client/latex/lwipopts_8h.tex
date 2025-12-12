@@ -1,0 +1,277 @@
+\doxysection{Referencia del archivo lwipopts.\+h}
+\hypertarget{lwipopts_8h}{}\label{lwipopts_8h}\index{lwipopts.h@{lwipopts.h}}
+
+
+Configuración de lw\+IP para la Raspberry Pi Pico W en modo sin RTOS.  
+
+
+\doxysubsubsection*{defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{lwipopts_8h_ae00ba99de94a5bf84d832be8976df59b}{NO\+\_\+\+SYS}}~1
+\begin{DoxyCompactList}\small\item\em Modo sin sistema operativo (Raw API). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a1cb62ce61ac39d7d6728ae5d3d3b927f}{LWIP\+\_\+\+SOCKET}}~0
+\begin{DoxyCompactList}\small\item\em Deshabilita la API de sockets de lw\+IP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a478041b8544461258f6961bf0f3c1a77}{LWIP\+\_\+\+NETCONN}}~0
+\begin{DoxyCompactList}\small\item\em Deshabilita la API Netconn de lw\+IP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_adaf25915ae1fd69c0943ef68cbb38923}{LWIP\+\_\+\+IGMP}}~0
+\begin{DoxyCompactList}\small\item\em Deshabilita soporte IGMP (no se usan grupos multicast). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_ae4d45345c3ab8e5a355fda1d8d24fca6}{LWIP\+\_\+\+ICMP}}~1
+\begin{DoxyCompactList}\small\item\em Habilita ICMP (por ejemplo, respuestas a ping). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a4ef345cc270912bd2230b1c5ec51dfc8}{MEM\+\_\+\+LIBC\+\_\+\+MALLOC}}~0
+\begin{DoxyCompactList}\small\item\em Usa el gestor de memoria interno de lw\+IP (no malloc de libc). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a97343214666ee6dcb18c0bd77b441ea7}{MEM\+\_\+\+ALIGNMENT}}~4
+\begin{DoxyCompactList}\small\item\em Alineación de memoria (en bytes). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a2dcf8c45f945dd0c4301a94700f2112c}{MEM\+\_\+\+SIZE}}~4000
+\begin{DoxyCompactList}\small\item\em Tamaño del heap interno de lw\+IP (en bytes). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_aa35fb3a1a76661e3ffb9722a57092de3}{MEMP\+\_\+\+NUM\+\_\+\+TCP\+\_\+\+SEG}}~32
+\begin{DoxyCompactList}\small\item\em Número de segmentos TCP disponibles. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a087b00ea20a7edebcad33a1a1353a5d7}{MEMP\+\_\+\+NUM\+\_\+\+ARP\+\_\+\+QUEUE}}~10
+\begin{DoxyCompactList}\small\item\em Número de entradas en la cola ARP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a50eaadc4cad0716410332691e382c38a}{PBUF\+\_\+\+POOL\+\_\+\+SIZE}}~24
+\begin{DoxyCompactList}\small\item\em Tamaño del pool de pbufs para RX/\+TX. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_aa4ed98deb97b77c633cb8870f34c71e9}{LWIP\+\_\+\+TCP}}~1
+\begin{DoxyCompactList}\small\item\em Habilita soporte TCP en la pila lw\+IP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}}~1460
+\begin{DoxyCompactList}\small\item\em Tamaño máximo de segmento TCP (MSS). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a7f535a6efb5cdf86c3210e35ece1d6a7}{TCP\+\_\+\+WND}}~(8 \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}})
+\begin{DoxyCompactList}\small\item\em Tamaño de la ventana TCP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a871d111968d8c6c7880ff36b93c5c4dd}{TCP\+\_\+\+SND\+\_\+\+BUF}}~(8 \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}})
+\begin{DoxyCompactList}\small\item\em Tamaño del buffer de envío TCP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a9beaa47832ead4180981bfbf71074904}{TCP\+\_\+\+SND\+\_\+\+QUEUELEN}}~((4 \texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{lwipopts_8h_a871d111968d8c6c7880ff36b93c5c4dd}{TCP\+\_\+\+SND\+\_\+\+BUF}}) + (\mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}} -\/ 1)) / (\mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}}))
+\begin{DoxyCompactList}\small\item\em Longitud de la cola de segmentos TCP listos para envío. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_ab6030e96e72df649d2650fd32d7a67b3}{LWIP\+\_\+\+UDP}}~1
+\begin{DoxyCompactList}\small\item\em Habilita soporte UDP en la pila lw\+IP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a9609a014bba4638cc191d6a8f9556c87}{LWIP\+\_\+\+ARP}}~1
+\begin{DoxyCompactList}\small\item\em Habilita la caché ARP. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a30e02dc217cc2995d0fd241d510c904f}{LWIP\+\_\+\+ETHERNET}}~1
+\begin{DoxyCompactList}\small\item\em Indica que se usa interfaz Ethernet (base para Wi-\/\+Fi). \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a8a6ec62dc121064ac591b1fd8567bee9}{LWIP\+\_\+\+DHCP}}~1
+\begin{DoxyCompactList}\small\item\em Habilita el cliente DHCP para obtener IP automáticamente. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{lwipopts_8h_a77370c377781ee7489e30eaf772ea05a}{LWIP\+\_\+\+RAND}}()
+\begin{DoxyCompactList}\small\item\em Generador de números aleatorios para lw\+IP. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Configuración de lw\+IP para la Raspberry Pi Pico W en modo sin RTOS. 
+
+Define parámetros de memoria, TCP/\+UDP, ARP y opciones de integración específicas para el uso de la Raw API en este proyecto. 
+
+\label{doc-define-members}
+\Hypertarget{lwipopts_8h_doc-define-members}
+\doxysubsection{Documentación de «define»}
+\Hypertarget{lwipopts_8h_a9609a014bba4638cc191d6a8f9556c87}\index{lwipopts.h@{lwipopts.h}!LWIP\_ARP@{LWIP\_ARP}}
+\index{LWIP\_ARP@{LWIP\_ARP}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_ARP}{LWIP\_ARP}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a9609a014bba4638cc191d6a8f9556c87} 
+\#define LWIP\+\_\+\+ARP~1}
+
+
+
+Habilita la caché ARP. 
+
+\Hypertarget{lwipopts_8h_a8a6ec62dc121064ac591b1fd8567bee9}\index{lwipopts.h@{lwipopts.h}!LWIP\_DHCP@{LWIP\_DHCP}}
+\index{LWIP\_DHCP@{LWIP\_DHCP}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_DHCP}{LWIP\_DHCP}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a8a6ec62dc121064ac591b1fd8567bee9} 
+\#define LWIP\+\_\+\+DHCP~1}
+
+
+
+Habilita el cliente DHCP para obtener IP automáticamente. 
+
+\Hypertarget{lwipopts_8h_a30e02dc217cc2995d0fd241d510c904f}\index{lwipopts.h@{lwipopts.h}!LWIP\_ETHERNET@{LWIP\_ETHERNET}}
+\index{LWIP\_ETHERNET@{LWIP\_ETHERNET}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_ETHERNET}{LWIP\_ETHERNET}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a30e02dc217cc2995d0fd241d510c904f} 
+\#define LWIP\+\_\+\+ETHERNET~1}
+
+
+
+Indica que se usa interfaz Ethernet (base para Wi-\/\+Fi). 
+
+\Hypertarget{lwipopts_8h_ae4d45345c3ab8e5a355fda1d8d24fca6}\index{lwipopts.h@{lwipopts.h}!LWIP\_ICMP@{LWIP\_ICMP}}
+\index{LWIP\_ICMP@{LWIP\_ICMP}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_ICMP}{LWIP\_ICMP}}
+{\footnotesize\ttfamily \label{lwipopts_8h_ae4d45345c3ab8e5a355fda1d8d24fca6} 
+\#define LWIP\+\_\+\+ICMP~1}
+
+
+
+Habilita ICMP (por ejemplo, respuestas a ping). 
+
+\Hypertarget{lwipopts_8h_adaf25915ae1fd69c0943ef68cbb38923}\index{lwipopts.h@{lwipopts.h}!LWIP\_IGMP@{LWIP\_IGMP}}
+\index{LWIP\_IGMP@{LWIP\_IGMP}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_IGMP}{LWIP\_IGMP}}
+{\footnotesize\ttfamily \label{lwipopts_8h_adaf25915ae1fd69c0943ef68cbb38923} 
+\#define LWIP\+\_\+\+IGMP~0}
+
+
+
+Deshabilita soporte IGMP (no se usan grupos multicast). 
+
+\Hypertarget{lwipopts_8h_a478041b8544461258f6961bf0f3c1a77}\index{lwipopts.h@{lwipopts.h}!LWIP\_NETCONN@{LWIP\_NETCONN}}
+\index{LWIP\_NETCONN@{LWIP\_NETCONN}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_NETCONN}{LWIP\_NETCONN}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a478041b8544461258f6961bf0f3c1a77} 
+\#define LWIP\+\_\+\+NETCONN~0}
+
+
+
+Deshabilita la API Netconn de lw\+IP. 
+
+\Hypertarget{lwipopts_8h_a77370c377781ee7489e30eaf772ea05a}\index{lwipopts.h@{lwipopts.h}!LWIP\_RAND@{LWIP\_RAND}}
+\index{LWIP\_RAND@{LWIP\_RAND}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_RAND}{LWIP\_RAND}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a77370c377781ee7489e30eaf772ea05a} 
+\#define LWIP\+\_\+\+RAND(\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+{\bfseries Valor\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{((u32\_t)rand())}
+
+\end{DoxyCode}
+
+
+Generador de números aleatorios para lw\+IP. 
+
+Usa la función estándar rand() de C como fuente de aleatoriedad. \Hypertarget{lwipopts_8h_a1cb62ce61ac39d7d6728ae5d3d3b927f}\index{lwipopts.h@{lwipopts.h}!LWIP\_SOCKET@{LWIP\_SOCKET}}
+\index{LWIP\_SOCKET@{LWIP\_SOCKET}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_SOCKET}{LWIP\_SOCKET}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a1cb62ce61ac39d7d6728ae5d3d3b927f} 
+\#define LWIP\+\_\+\+SOCKET~0}
+
+
+
+Deshabilita la API de sockets de lw\+IP. 
+
+\Hypertarget{lwipopts_8h_aa4ed98deb97b77c633cb8870f34c71e9}\index{lwipopts.h@{lwipopts.h}!LWIP\_TCP@{LWIP\_TCP}}
+\index{LWIP\_TCP@{LWIP\_TCP}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_TCP}{LWIP\_TCP}}
+{\footnotesize\ttfamily \label{lwipopts_8h_aa4ed98deb97b77c633cb8870f34c71e9} 
+\#define LWIP\+\_\+\+TCP~1}
+
+
+
+Habilita soporte TCP en la pila lw\+IP. 
+
+\Hypertarget{lwipopts_8h_ab6030e96e72df649d2650fd32d7a67b3}\index{lwipopts.h@{lwipopts.h}!LWIP\_UDP@{LWIP\_UDP}}
+\index{LWIP\_UDP@{LWIP\_UDP}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{LWIP\_UDP}{LWIP\_UDP}}
+{\footnotesize\ttfamily \label{lwipopts_8h_ab6030e96e72df649d2650fd32d7a67b3} 
+\#define LWIP\+\_\+\+UDP~1}
+
+
+
+Habilita soporte UDP en la pila lw\+IP. 
+
+\Hypertarget{lwipopts_8h_a97343214666ee6dcb18c0bd77b441ea7}\index{lwipopts.h@{lwipopts.h}!MEM\_ALIGNMENT@{MEM\_ALIGNMENT}}
+\index{MEM\_ALIGNMENT@{MEM\_ALIGNMENT}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{MEM\_ALIGNMENT}{MEM\_ALIGNMENT}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a97343214666ee6dcb18c0bd77b441ea7} 
+\#define MEM\+\_\+\+ALIGNMENT~4}
+
+
+
+Alineación de memoria (en bytes). 
+
+\Hypertarget{lwipopts_8h_a4ef345cc270912bd2230b1c5ec51dfc8}\index{lwipopts.h@{lwipopts.h}!MEM\_LIBC\_MALLOC@{MEM\_LIBC\_MALLOC}}
+\index{MEM\_LIBC\_MALLOC@{MEM\_LIBC\_MALLOC}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{MEM\_LIBC\_MALLOC}{MEM\_LIBC\_MALLOC}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a4ef345cc270912bd2230b1c5ec51dfc8} 
+\#define MEM\+\_\+\+LIBC\+\_\+\+MALLOC~0}
+
+
+
+Usa el gestor de memoria interno de lw\+IP (no malloc de libc). 
+
+\Hypertarget{lwipopts_8h_a2dcf8c45f945dd0c4301a94700f2112c}\index{lwipopts.h@{lwipopts.h}!MEM\_SIZE@{MEM\_SIZE}}
+\index{MEM\_SIZE@{MEM\_SIZE}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{MEM\_SIZE}{MEM\_SIZE}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a2dcf8c45f945dd0c4301a94700f2112c} 
+\#define MEM\+\_\+\+SIZE~4000}
+
+
+
+Tamaño del heap interno de lw\+IP (en bytes). 
+
+\Hypertarget{lwipopts_8h_a087b00ea20a7edebcad33a1a1353a5d7}\index{lwipopts.h@{lwipopts.h}!MEMP\_NUM\_ARP\_QUEUE@{MEMP\_NUM\_ARP\_QUEUE}}
+\index{MEMP\_NUM\_ARP\_QUEUE@{MEMP\_NUM\_ARP\_QUEUE}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{MEMP\_NUM\_ARP\_QUEUE}{MEMP\_NUM\_ARP\_QUEUE}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a087b00ea20a7edebcad33a1a1353a5d7} 
+\#define MEMP\+\_\+\+NUM\+\_\+\+ARP\+\_\+\+QUEUE~10}
+
+
+
+Número de entradas en la cola ARP. 
+
+\Hypertarget{lwipopts_8h_aa35fb3a1a76661e3ffb9722a57092de3}\index{lwipopts.h@{lwipopts.h}!MEMP\_NUM\_TCP\_SEG@{MEMP\_NUM\_TCP\_SEG}}
+\index{MEMP\_NUM\_TCP\_SEG@{MEMP\_NUM\_TCP\_SEG}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{MEMP\_NUM\_TCP\_SEG}{MEMP\_NUM\_TCP\_SEG}}
+{\footnotesize\ttfamily \label{lwipopts_8h_aa35fb3a1a76661e3ffb9722a57092de3} 
+\#define MEMP\+\_\+\+NUM\+\_\+\+TCP\+\_\+\+SEG~32}
+
+
+
+Número de segmentos TCP disponibles. 
+
+\Hypertarget{lwipopts_8h_ae00ba99de94a5bf84d832be8976df59b}\index{lwipopts.h@{lwipopts.h}!NO\_SYS@{NO\_SYS}}
+\index{NO\_SYS@{NO\_SYS}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{NO\_SYS}{NO\_SYS}}
+{\footnotesize\ttfamily \label{lwipopts_8h_ae00ba99de94a5bf84d832be8976df59b} 
+\#define NO\+\_\+\+SYS~1}
+
+
+
+Modo sin sistema operativo (Raw API). 
+
+NO\+\_\+\+SYS = 1 indica que lw\+IP se ejecuta sin RTOS, usando la Raw API. \Hypertarget{lwipopts_8h_a50eaadc4cad0716410332691e382c38a}\index{lwipopts.h@{lwipopts.h}!PBUF\_POOL\_SIZE@{PBUF\_POOL\_SIZE}}
+\index{PBUF\_POOL\_SIZE@{PBUF\_POOL\_SIZE}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{PBUF\_POOL\_SIZE}{PBUF\_POOL\_SIZE}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a50eaadc4cad0716410332691e382c38a} 
+\#define PBUF\+\_\+\+POOL\+\_\+\+SIZE~24}
+
+
+
+Tamaño del pool de pbufs para RX/\+TX. 
+
+\Hypertarget{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}\index{lwipopts.h@{lwipopts.h}!TCP\_MSS@{TCP\_MSS}}
+\index{TCP\_MSS@{TCP\_MSS}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{TCP\_MSS}{TCP\_MSS}}
+{\footnotesize\ttfamily \label{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b} 
+\#define TCP\+\_\+\+MSS~1460}
+
+
+
+Tamaño máximo de segmento TCP (MSS). 
+
+\Hypertarget{lwipopts_8h_a871d111968d8c6c7880ff36b93c5c4dd}\index{lwipopts.h@{lwipopts.h}!TCP\_SND\_BUF@{TCP\_SND\_BUF}}
+\index{TCP\_SND\_BUF@{TCP\_SND\_BUF}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{TCP\_SND\_BUF}{TCP\_SND\_BUF}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a871d111968d8c6c7880ff36b93c5c4dd} 
+\#define TCP\+\_\+\+SND\+\_\+\+BUF~(8 \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}})}
+
+
+
+Tamaño del buffer de envío TCP. 
+
+\Hypertarget{lwipopts_8h_a9beaa47832ead4180981bfbf71074904}\index{lwipopts.h@{lwipopts.h}!TCP\_SND\_QUEUELEN@{TCP\_SND\_QUEUELEN}}
+\index{TCP\_SND\_QUEUELEN@{TCP\_SND\_QUEUELEN}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{TCP\_SND\_QUEUELEN}{TCP\_SND\_QUEUELEN}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a9beaa47832ead4180981bfbf71074904} 
+\#define TCP\+\_\+\+SND\+\_\+\+QUEUELEN~((4 \texorpdfstring{$\ast$}{*} (\mbox{\hyperlink{lwipopts_8h_a871d111968d8c6c7880ff36b93c5c4dd}{TCP\+\_\+\+SND\+\_\+\+BUF}}) + (\mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}} -\/ 1)) / (\mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}}))}
+
+
+
+Longitud de la cola de segmentos TCP listos para envío. 
+
+\Hypertarget{lwipopts_8h_a7f535a6efb5cdf86c3210e35ece1d6a7}\index{lwipopts.h@{lwipopts.h}!TCP\_WND@{TCP\_WND}}
+\index{TCP\_WND@{TCP\_WND}!lwipopts.h@{lwipopts.h}}
+\doxysubsubsection{\texorpdfstring{TCP\_WND}{TCP\_WND}}
+{\footnotesize\ttfamily \label{lwipopts_8h_a7f535a6efb5cdf86c3210e35ece1d6a7} 
+\#define TCP\+\_\+\+WND~(8 \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{lwipopts_8h_af1ab7bb27860aa3677c387a2f3ba317b}{TCP\+\_\+\+MSS}})}
+
+
+
+Tamaño de la ventana TCP. 
+

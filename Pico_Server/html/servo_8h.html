@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Mimic Hand Server: Referencia del archivo C:/Users/luisc/Desktop/Mimic Hand 2/Pico_Server/lib/servo/servo.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Mimic Hand Server
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',false);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a href="dir_d1a4f3964f788d5894e26a0a4b8ceb76.html">Pico_Server</a></li><li class="navelem"><a href="dir_19e1e31654422fed06334a1541f0224d.html">lib</a></li><li class="navelem"><a href="dir_7670562dc3022a90d3ca7030a1a13583.html">servo</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Estructuras de datos</a> &#124;
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo servo.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Interfaz del driver PCA9685 para servomotores.  
+<a href="#details">Más...</a></p>
+<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &quot;hardware/i2c.h&quot;</code><br />
+</div>
+<p><a href="servo_8h_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Estructuras de datos</h2></td></tr>
+<tr class="memitem:servo_5Fpca_5Ft" id="r_servo_5Fpca_5Ft"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structservo__pca__t.html">servo_pca_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Descriptor del controlador PCA9685.  <a href="structservo__pca__t.html#details">Más...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a4a40e7fe2b88a4747ea071873e6f512e" id="r_a4a40e7fe2b88a4747ea071873e6f512e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4a40e7fe2b88a4747ea071873e6f512e">SERVO_I2C</a>&#160;&#160;&#160;i2c1</td></tr>
+<tr class="memitem:a902586424917b1e2eeddded30d633274" id="r_a902586424917b1e2eeddded30d633274"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a902586424917b1e2eeddded30d633274">SERVO_SDA_PIN</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memitem:a53c0179c227f863a61657cd0730782af" id="r_a53c0179c227f863a61657cd0730782af"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53c0179c227f863a61657cd0730782af">SERVO_SCL_PIN</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memitem:aeec90b1deeeda60215a56e0beb853358" id="r_aeec90b1deeeda60215a56e0beb853358"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeec90b1deeeda60215a56e0beb853358">PCA9685_ADDR</a>&#160;&#160;&#160;0x40</td></tr>
+<tr class="memitem:aaa7c5c7973c5f196d707256aed5dbbb2" id="r_aaa7c5c7973c5f196d707256aed5dbbb2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa7c5c7973c5f196d707256aed5dbbb2">SERVO_FREQ_HZ</a>&#160;&#160;&#160;50.0f</td></tr>
+<tr class="memitem:a5275c9f2f5c94c9631de73a93169ace2" id="r_a5275c9f2f5c94c9631de73a93169ace2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5275c9f2f5c94c9631de73a93169ace2">SERVO_US_MIN</a>&#160;&#160;&#160;500.0f</td></tr>
+<tr class="memitem:a78d468eed63eb5f2bc16cf3593ac2060" id="r_a78d468eed63eb5f2bc16cf3593ac2060"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78d468eed63eb5f2bc16cf3593ac2060">SERVO_US_CENTER</a>&#160;&#160;&#160;1500.0f</td></tr>
+<tr class="memitem:a19b281d27f18f896b929e71c71e6a9ba" id="r_a19b281d27f18f896b929e71c71e6a9ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19b281d27f18f896b929e71c71e6a9ba">SERVO_US_MAX</a>&#160;&#160;&#160;2400.0f</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:ae5c0ca512977be2a856e2111dde5a500" id="r_ae5c0ca512977be2a856e2111dde5a500"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5c0ca512977be2a856e2111dde5a500">servo_init</a> (<a class="el" href="structservo__pca__t.html">servo_pca_t</a> *dev)</td></tr>
+<tr class="memdesc:ae5c0ca512977be2a856e2111dde5a500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa el PCA9685 y el bus I2C.  <br /></td></tr>
+<tr class="memitem:a2f66ccdf152b0879d5b8f299e6cf3071" id="r_a2f66ccdf152b0879d5b8f299e6cf3071"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f66ccdf152b0879d5b8f299e6cf3071">servo_set_us</a> (<a class="el" href="structservo__pca__t.html">servo_pca_t</a> *dev, uint8_t channel, float us)</td></tr>
+<tr class="memdesc:a2f66ccdf152b0879d5b8f299e6cf3071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configura el pulso de un canal en microsegundos.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Interfaz del driver PCA9685 para servomotores. </p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentación de «define»</h2>
+<a id="aeec90b1deeeda60215a56e0beb853358" name="aeec90b1deeeda60215a56e0beb853358"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeec90b1deeeda60215a56e0beb853358">&#9670;&#160;</a></span>PCA9685_ADDR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define PCA9685_ADDR&#160;&#160;&#160;0x40</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Dirección I2C del PCA9685. </p>
+
+</div>
+</div>
+<a id="aaa7c5c7973c5f196d707256aed5dbbb2" name="aaa7c5c7973c5f196d707256aed5dbbb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa7c5c7973c5f196d707256aed5dbbb2">&#9670;&#160;</a></span>SERVO_FREQ_HZ</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVO_FREQ_HZ&#160;&#160;&#160;50.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Frecuencia PWM para servos (Hz). </p>
+
+</div>
+</div>
+<a id="a4a40e7fe2b88a4747ea071873e6f512e" name="a4a40e7fe2b88a4747ea071873e6f512e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a40e7fe2b88a4747ea071873e6f512e">&#9670;&#160;</a></span>SERVO_I2C</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVO_I2C&#160;&#160;&#160;i2c1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Instancia I2C usada para el controlador de servos. </p>
+
+</div>
+</div>
+<a id="a53c0179c227f863a61657cd0730782af" name="a53c0179c227f863a61657cd0730782af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53c0179c227f863a61657cd0730782af">&#9670;&#160;</a></span>SERVO_SCL_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVO_SCL_PIN&#160;&#160;&#160;3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pin SCL del bus I2C. </p>
+
+</div>
+</div>
+<a id="a902586424917b1e2eeddded30d633274" name="a902586424917b1e2eeddded30d633274"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a902586424917b1e2eeddded30d633274">&#9670;&#160;</a></span>SERVO_SDA_PIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVO_SDA_PIN&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pin SDA del bus I2C. </p>
+
+</div>
+</div>
+<a id="a78d468eed63eb5f2bc16cf3593ac2060" name="a78d468eed63eb5f2bc16cf3593ac2060"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78d468eed63eb5f2bc16cf3593ac2060">&#9670;&#160;</a></span>SERVO_US_CENTER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVO_US_CENTER&#160;&#160;&#160;1500.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pulso central del servo (µs). </p>
+
+</div>
+</div>
+<a id="a19b281d27f18f896b929e71c71e6a9ba" name="a19b281d27f18f896b929e71c71e6a9ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19b281d27f18f896b929e71c71e6a9ba">&#9670;&#160;</a></span>SERVO_US_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVO_US_MAX&#160;&#160;&#160;2400.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pulso máximo del servo (µs). </p>
+
+</div>
+</div>
+<a id="a5275c9f2f5c94c9631de73a93169ace2" name="a5275c9f2f5c94c9631de73a93169ace2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5275c9f2f5c94c9631de73a93169ace2">&#9670;&#160;</a></span>SERVO_US_MIN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVO_US_MIN&#160;&#160;&#160;500.0f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pulso mínimo del servo (µs). </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="ae5c0ca512977be2a856e2111dde5a500" name="ae5c0ca512977be2a856e2111dde5a500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5c0ca512977be2a856e2111dde5a500">&#9670;&#160;</a></span>servo_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool servo_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structservo__pca__t.html">servo_pca_t</a> *</td>          <td class="paramname"><span class="paramname"><em>dev</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inicializa el PCA9685 y el bus I2C. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dev</td><td>Estructura del dispositivo a inicializar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>true en éxito, false en error.</dd></dl>
+<p>Inicializa el PCA9685 y el bus I2C.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dev</td><td>Dispositivo PCA9685 a configurar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>true en éxito, false en error o puntero nulo. </dd></dl>
+
+</div>
+</div>
+<a id="a2f66ccdf152b0879d5b8f299e6cf3071" name="a2f66ccdf152b0879d5b8f299e6cf3071"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f66ccdf152b0879d5b8f299e6cf3071">&#9670;&#160;</a></span>servo_set_us()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool servo_set_us </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structservo__pca__t.html">servo_pca_t</a> *</td>          <td class="paramname"><span class="paramname"><em>dev</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>channel</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>us</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configura el pulso de un canal en microsegundos. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dev</td><td>Dispositivo PCA9685. </td></tr>
+    <tr><td class="paramname">channel</td><td>Canal [0..15]. </td></tr>
+    <tr><td class="paramname">us</td><td>Ancho de pulso en µs. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>true en éxito, false en error. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>

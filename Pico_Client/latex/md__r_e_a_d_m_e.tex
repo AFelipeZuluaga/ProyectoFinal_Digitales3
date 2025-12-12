@@ -1,0 +1,439 @@
+\chapter{Mimic Hand – Mano robótica teleoperada con Raspberry Pi Pico W }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{Mimic Hand – Mano robótica teleoperada con Raspberry Pi Pico W@{Mimic Hand – Mano robótica teleoperada con Raspberry Pi Pico W}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+Proyecto de una mano robótica mimética controlada mediante un guante instrumentado, usando {\bfseries{dos Raspberry Pi Pico W}} que se comunican por {\bfseries{Wi-\/\+Fi (UDP)}}.
+
+
+\begin{DoxyItemize}
+\item {\bfseries{GUANTE (cliente)}}\+: lee la flexión de los dedos con sensores Hall + ADC. ~\newline
+
+\item {\bfseries{MANO (servidor)}}\+: recibe los datos por UDP y mueve servomotores vía PCA9685. ~\newline
+
+\item {\bfseries{Red}}\+: ambos Picos conectados como {\bfseries{STA}} a un {\bfseries{hotspot de celular}}, no se usa el Pico como AP.
+\end{DoxyItemize}
+
+Este README está pensado para el repositorio Git del proyecto.
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{1. Resumen del funcionamiento}{1. Resumen del funcionamiento}}\label{md__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyEnumerate}
+\item El {\bfseries{Pico de la mano}}\+:
+\begin{DoxyItemize}
+\item Se conecta al hotspot.
+\item Imprime su IP en el monitor serie.
+\item Inicia el driver PCA9685 (I²C) y coloca los servos en posición inicial.
+\item Crea un servidor UDP en el puerto {\ttfamily 4242}.
+\item Cuando recibe tramas del guante, convierte los valores discretos de cada dedo a anchos de pulso y actualiza los servos.
+\end{DoxyItemize}
+\item El {\bfseries{Pico del guante}}\+:
+\begin{DoxyItemize}
+\item Se conecta al mismo hotspot.
+\item Inicia ADC + multiplexor de sensores Hall.
+\item Usa un {\bfseries{timer en IRQ}} para marcar cada cuánto enviar datos.
+\item En el bucle principal (polling), cuando toca enviar\+:
+\begin{DoxyItemize}
+\item Lee los 5 dedos.
+\item Normaliza cada uno a un rango discreto {\ttfamily 0–9}.
+\item Forma una trama {\ttfamily H,v0,v1,v2,v3,v4}.
+\item La manda por UDP a la IP de la mano.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\item El sistema está optimizado para\+:
+\begin{DoxyItemize}
+\item Movimiento continuo. ~\newline
+
+\item Baja latencia. ~\newline
+
+\item Tolerancia a pérdida de paquetes (no hay ACK ni reintentos).
+\end{DoxyItemize}
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{2. Estructura del repositorio}{2. Estructura del repositorio}}\label{md__r_e_a_d_m_e_autotoc_md4}
+Estructura sugerida (puede variar un poco según tu proyecto)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{.}
+\DoxyCodeLine{├─\ CMakeLists.txt}
+\DoxyCodeLine{├─\ README.md}
+\DoxyCodeLine{├─\ src/}
+\DoxyCodeLine{│\ \ ├─\ Pico\_Server.c\ \ \ \ \ \ \ \ \#\ Mano\ robótica\ (servidor\ UDP)}
+\DoxyCodeLine{│\ \ ├─\ Pico\_Client.c\ \ \ \ \ \ \ \ \#\ Guante\ (cliente\ UDP)}
+\DoxyCodeLine{│\ \ └─\ lwipopts.h\ \ \ \ \ \ \ \ \ \ \ \#\ Configuración\ lwIP\ para\ Pico\ W}
+\DoxyCodeLine{└─\ lib/}
+\DoxyCodeLine{\ \ \ ├─\ servo/}
+\DoxyCodeLine{\ \ \ │\ \ ├─\ servo.h\ \ \ \ \ \ \ \ \ \ \ \#\ API\ de\ alto\ nivel\ para\ PCA9685\ +\ servos}
+\DoxyCodeLine{\ \ \ │\ \ └─\ servo.c}
+\DoxyCodeLine{\ \ \ └─\ guante/}
+\DoxyCodeLine{\ \ \ \ \ \ ├─\ guante.h\ \ \ \ \ \ \ \ \ \ \#\ API\ de\ alto\ nivel\ del\ guante\ (ADC\ +\ MUX)}
+\DoxyCodeLine{\ \ \ \ \ \ └─\ guante.c}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{3. Arquitectura de hardware}{3. Arquitectura de hardware}}\label{md__r_e_a_d_m_e_autotoc_md6}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md7}{}\doxysubsection{\texorpdfstring{Guante (cliente)}{Guante (cliente)}}\label{md__r_e_a_d_m_e_autotoc_md7}
+
+\begin{DoxyItemize}
+\item Raspberry Pi Pico W. ~\newline
+
+\item 5× sensores Hall (uno por dedo) + imanes. ~\newline
+
+\item Multiplexor analógico para seleccionar qué sensor leer. ~\newline
+
+\item ADC0 en GPIO26 para medir el voltaje del sensor seleccionado. ~\newline
+
+\item Alimentación compartida para Pico + sensores.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysubsection{\texorpdfstring{Mano robótica (servidor)}{Mano robótica (servidor)}}\label{md__r_e_a_d_m_e_autotoc_md8}
+
+\begin{DoxyItemize}
+\item Raspberry Pi Pico W. ~\newline
+
+\item Driver PCA9685 por I²C (p. ej. {\ttfamily i2c1}, pines SDA/\+SCL). ~\newline
+
+\item Servomotores conectados a los canales del PCA9685. ~\newline
+
+\item Fuente de servos independiente, con {\bfseries{masa común}} con la lógica.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md9}{}\doxysubsection{\texorpdfstring{Red}{Red}}\label{md__r_e_a_d_m_e_autotoc_md9}
+
+\begin{DoxyItemize}
+\item Hotspot de un teléfono (i\+OS). ~\newline
+
+\item Ambos Picos como {\bfseries{STA}}\+:
+\begin{DoxyItemize}
+\item El hotspot asigna IP por DHCP.
+\item El servidor imprime su IP ({\ttfamily IP\+\_\+\+SERVER}).
+\item El cliente la usa como {\ttfamily SERVER\+\_\+\+IP} para los paquetes UDP.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysection{\texorpdfstring{4. Arquitectura de software}{4. Arquitectura de software}}\label{md__r_e_a_d_m_e_autotoc_md11}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysubsection{\texorpdfstring{4.\+1. {\ttfamily Pico\+\_\+\+Server.\+c} (MANO – Servidor UDP)}{4.\+1. {\ttfamily Pico\+\_\+\+Server.\+c} (MANO – Servidor UDP)}}\label{md__r_e_a_d_m_e_autotoc_md12}
+Responsabilidades\+:
+
+
+\begin{DoxyItemize}
+\item Inicializa\+:
+\begin{DoxyItemize}
+\item stdio/\+USB para logs, ~\newline
+
+\item Wi-\/\+Fi en modo STA, ~\newline
+
+\item conexión al hotspot (SSID y contraseña configurables).
+\end{DoxyItemize}
+\item Imprime por serial la {\bfseries{IP del servidor}} (para configurarla en el guante).
+\item Inicializa el PCA9685 vía {\ttfamily servo\+\_\+init(...)} y sitúa los servos en posición segura.
+\item Crea un {\bfseries{servidor UDP}}\+:
+\begin{DoxyItemize}
+\item {\ttfamily udp\+\_\+new\+\_\+ip\+\_\+type}, {\ttfamily udp\+\_\+bind}, {\ttfamily udp\+\_\+recv}.
+\end{DoxyItemize}
+\item Callback de recepción UDP\+:
+\begin{DoxyItemize}
+\item Recibe tramas de texto\+: {\ttfamily H,v0,v1,v2,v3,v4}.
+\item Valida número de campos y rango ({\ttfamily 0–9}).
+\item Actualiza un búfer de valores de dedos + una bandera de “nuevo dato”.
+\item Imprime la trama y el conteo de paquetes recibidos.
+\end{DoxyItemize}
+\item Bucle principal (polling)\+:
+\begin{DoxyItemize}
+\item Llama regularmente a {\ttfamily cyw43\+\_\+arch\+\_\+poll()} (mover la pila lw\+IP).
+\item Si hay nuevos datos\+: copia los valores y llama a la lógica que\+:
+\begin{DoxyItemize}
+\item convierte {\ttfamily 0–9} a un ancho de pulso en microsegundos,
+\item opcionalmente invierte algún dedo según el montaje,
+\item llama a {\ttfamily servo\+\_\+set\+\_\+us()} para cada dedo.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\item Timer en IRQ\+:
+\begin{DoxyItemize}
+\item {\ttfamily repeating\+\_\+timer} que solo parpadea el LED integrado como “heartbeat”.
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysubsection{\texorpdfstring{4.\+2. {\ttfamily Pico\+\_\+\+Client.\+c} (GUANTE – Cliente UDP)}{4.\+2. {\ttfamily Pico\+\_\+\+Client.\+c} (GUANTE – Cliente UDP)}}\label{md__r_e_a_d_m_e_autotoc_md13}
+Responsabilidades\+:
+
+
+\begin{DoxyItemize}
+\item Inicializa\+:
+\begin{DoxyItemize}
+\item stdio/\+USB, ~\newline
+
+\item Wi-\/\+Fi en modo STA, ~\newline
+
+\item conexión al mismo hotspot.
+\end{DoxyItemize}
+\item Inicializa el guante ({\ttfamily \doxylink{guante_8c_a57435129a0bd0b526eb8df8a6de1b053}{guante\+\_\+init()}})\+:
+\begin{DoxyItemize}
+\item ADC, ~\newline
+
+\item pines del multiplexor.
+\end{DoxyItemize}
+\item Crea un {\bfseries{cliente UDP}} conectado a {\ttfamily SERVER\+\_\+\+IP\+:4242}.
+\item Configura un {\bfseries{timer en interrupción}}\+:
+\begin{DoxyItemize}
+\item Un {\ttfamily repeating\+\_\+timer} que cada X ms levanta una bandera {\ttfamily flag\+\_\+timer\+\_\+send}.
+\end{DoxyItemize}
+\item Bucle principal (polling)\+:
+\begin{DoxyItemize}
+\item Llama a {\ttfamily cyw43\+\_\+arch\+\_\+poll()}.
+\item Cuando {\ttfamily flag\+\_\+timer\+\_\+send} está activa\+:
+\begin{DoxyItemize}
+\item La limpia.
+\item Llama a {\ttfamily guante\+\_\+leer\+\_\+dedos(...)} para obtener los 5 valores normalizados {\ttfamily 0–9}.
+\item Forma una trama ASCII {\ttfamily H,v0,v1,v2,v3,v4}.
+\item Usa {\ttfamily udp\+\_\+send} para transmitirla.
+\item Imprime en consola la trama enviada y el número de paquete.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysubsection{\texorpdfstring{4.\+3. {\ttfamily lib/servo/servo.\+h} – {\ttfamily servo.\+c}}{4.\+3. {\ttfamily lib/servo/servo.\+h} – {\ttfamily servo.\+c}}}\label{md__r_e_a_d_m_e_autotoc_md14}
+Responsabilidades\+:
+
+
+\begin{DoxyItemize}
+\item Encapsula el acceso al PCA9685\+:
+\begin{DoxyItemize}
+\item Configura dirección I²C, frecuencia de PWM, modo Auto-\/\+Increment.
+\item Calcula el prescaler adecuado para la frecuencia deseada.
+\end{DoxyItemize}
+\item Proporciona funciones de alto nivel\+:
+\begin{DoxyItemize}
+\item {\ttfamily servo\+\_\+init(servo\+\_\+pca\+\_\+t \texorpdfstring{$\ast$}{*}dev)} – setup completo del PCA9685.
+\item {\ttfamily servo\+\_\+set\+\_\+us(dev, canal, ancho\+\_\+us)} – asignar un pulso en microsegundos a un canal.
+\end{DoxyItemize}
+\item Internamente\+:
+\begin{DoxyItemize}
+\item Convierte µs → cuentas de 12 bits (0–4095).
+\item Aplica límites de seguridad ({\ttfamily SERVO\+\_\+\+US\+\_\+\+MIN}, {\ttfamily SERVO\+\_\+\+US\+\_\+\+MAX}).
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{\texorpdfstring{4.\+4. {\ttfamily lib/guante/guante.\+h} – {\ttfamily guante.\+c}}{4.\+4. {\ttfamily lib/guante/guante.\+h} – {\ttfamily guante.\+c}}}\label{md__r_e_a_d_m_e_autotoc_md15}
+Responsabilidades\+:
+
+
+\begin{DoxyItemize}
+\item Configura ADC y pines del MUX (selección de dedo).
+\item Para cada dedo\+:
+\begin{DoxyItemize}
+\item Selecciona el canal del MUX.
+\item Lee el ADC (valor crudo).
+\item Lo convierte a voltaje (para depuración).
+\item Lo mapea a un rango discreto {\ttfamily 0–9} usando umbrales globales {\ttfamily RAW\+\_\+\+MIN} / {\ttfamily RAW\+\_\+\+MAX}.
+\end{DoxyItemize}
+\item Ofrece una API simple\+:
+\begin{DoxyItemize}
+\item {\ttfamily \doxylink{guante_8c_a57435129a0bd0b526eb8df8a6de1b053}{guante\+\_\+init()}} – inicialización de hardware.
+\item {\ttfamily guante\+\_\+leer\+\_\+dedos(uint8\+\_\+t out\mbox{[}5\mbox{]})} – rellena el arreglo con valores {\ttfamily 0–9}.
+\end{DoxyItemize}
+\item Durante la fase de calibración\+:
+\begin{DoxyItemize}
+\item Imprime por consola las tensiones de cada dedo en una sola línea para poder observar mínimos y máximos.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysection{\texorpdfstring{5. Protocolo de comunicación}{5. Protocolo de comunicación}}\label{md__r_e_a_d_m_e_autotoc_md17}
+
+\begin{DoxyItemize}
+\item Transporte\+: {\bfseries{UDP}} sobre IPv4. ~\newline
+
+\item Puerto\+: {\ttfamily 4242}. ~\newline
+
+\item Servidor\+: IP asignada por el hotspot (p. ej. {\ttfamily 172.\+20.\+10.\+2}). ~\newline
+
+\item Cliente\+: IP también asignada por el hotspot (p. ej. {\ttfamily 172.\+20.\+10.\+3}.
+\end{DoxyItemize}
+
+Formato de trama (texto ASCII)\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{H,v0,v1,v2,v3,v4}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item {\ttfamily H} → identificador de cabecera. ~\newline
+
+\item {\ttfamily v0..v4} → enteros {\ttfamily 0–9} (flexión de cada dedo ya normalizada).
+\end{DoxyItemize}
+
+Características del protocolo\+:
+
+
+\begin{DoxyItemize}
+\item No hay ACK, ni números de secuencia, ni retransmisión. ~\newline
+
+\item Si se pierde un paquete, simplemente se usa el siguiente estado. ~\newline
+
+\item Diseño intencional\+: priorizar movimiento fluido y baja latencia frente a fiabilidad absoluta.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md19}{}\doxysection{\texorpdfstring{6. Problemas importantes y soluciones}{6. Problemas importantes y soluciones}}\label{md__r_e_a_d_m_e_autotoc_md19}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md20}{}\doxysubsection{\texorpdfstring{6.\+1. Pico como AP → congelamientos de la red}{6.\+1. Pico como AP → congelamientos de la red}}\label{md__r_e_a_d_m_e_autotoc_md20}
+{\bfseries{Problema\+:}}
+
+
+\begin{DoxyItemize}
+\item En las primeras versiones, la Pico de la mano funcionaba como {\bfseries{punto de acceso (AP)}}.
+\item Tras cierto número de paquetes, el receptor\+:
+\begin{DoxyItemize}
+\item Dejaba de entrar al callback de UDP.
+\item Se quedaba con {\ttfamily packet\+\_\+count} fijo.
+\item El programa no se colgaba por completo, pero la recepción de datos sí.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{Causa probable\+:}}
+
+
+\begin{DoxyItemize}
+\item Limitaciones / bugs del stack de red en modo AP del Pico W (buffers, manejo de colas, etc.).
+\end{DoxyItemize}
+
+{\bfseries{Solución\+:}}
+
+
+\begin{DoxyItemize}
+\item Cambiar la topología\+:
+\begin{DoxyItemize}
+\item Hotspot de celular como {\bfseries{AP externo}}.
+\item Ambos Picos como {\bfseries{STA}}.
+\end{DoxyItemize}
+\item Resultado\+:
+\begin{DoxyItemize}
+\item Desaparecen los congelamientos de recepción.
+\item La comunicación se vuelve estable a largo plazo.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md22}{}\doxysubsection{\texorpdfstring{6.\+2. Watchdog + conexión Wi-\/\+Fi bloqueante}{6.\+2. Watchdog + conexión Wi-\/\+Fi bloqueante}}\label{md__r_e_a_d_m_e_autotoc_md22}
+{\bfseries{Problema\+:}}
+
+
+\begin{DoxyItemize}
+\item Se habilitó el watchdog con timeout de \texorpdfstring{$\sim$}{\string~}8 s.
+\item La función de conexión Wi-\/\+Fi ({\ttfamily cyw43\+\_\+arch\+\_\+wifi\+\_\+connect\+\_\+timeout\+\_\+ms}) puede bloquear hasta \texorpdfstring{$\sim$}{\string~}15 s.
+\item Al no llamar a {\ttfamily watchdog\+\_\+update()} durante ese tiempo, la Pico se reiniciaba.
+\item En el monitor serie se veía que intentaba conectar y el puerto se cerraba una y otra vez.
+\end{DoxyItemize}
+
+{\bfseries{Solución\+:}}
+
+
+\begin{DoxyItemize}
+\item Desactivar el watchdog durante la fase de conexión Wi-\/\+Fi.
+\item (Opcional futuro) volver a activarlo, pero solo después de estar conectados, refrescándolo en el bucle principal.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md24}{}\doxysubsection{\texorpdfstring{6.\+3. Lógica de sensores invertida (7 abierto, 0 cerrado)}{6.\+3. Lógica de sensores invertida (7 abierto, 0 cerrado)}}\label{md__r_e_a_d_m_e_autotoc_md24}
+{\bfseries{Problema\+:}}
+
+
+\begin{DoxyItemize}
+\item El hardware entregaba valores normalizados con “signo” opuesto\+:
+\begin{DoxyItemize}
+\item Mano abierta → valor alto.
+\item Mano cerrada → valor bajo.
+\end{DoxyItemize}
+\item Para la mano robótica era más natural\+:
+\begin{DoxyItemize}
+\item {\ttfamily 0} → dedo abierto.
+\item valor máximo → dedo cerrado.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{Solución\+:}}
+
+
+\begin{DoxyItemize}
+\item Mantener la normalización cruda {\ttfamily 0–9} y luego invertir donde corresponde\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{nivel\_invertido\ =\ MAX\ -\/\ nivel;}
+
+\end{DoxyCode}
+
+\item Esta inversión se hace en la lógica de la mano para el dedo que lo requiera, de forma transparente para el resto del código.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md26}{}\doxysubsection{\texorpdfstring{6.\+4. Calibración de sensores Hall}{6.\+4. Calibración de sensores Hall}}\label{md__r_e_a_d_m_e_autotoc_md26}
+{\bfseries{Problema\+:}}
+
+
+\begin{DoxyItemize}
+\item Cada sensor Hall presenta un rango de tensiones distinto entre\+:
+\begin{DoxyItemize}
+\item mano totalmente abierta,
+\item mano totalmente cerrada.
+\end{DoxyItemize}
+\item Sin calibración, el mapeo {\ttfamily raw → 0–9} podría\+:
+\begin{DoxyItemize}
+\item saturarse antes del final del recorrido,
+\item no usar toda la resolución.
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+{\bfseries{Solución\+:}}
+
+
+\begin{DoxyItemize}
+\item Añadir impresión de voltajes por dedo durante las pruebas\+:
+\begin{DoxyItemize}
+\item Ejemplo\+: ~\newline
+ {\ttfamily Vdedos\+: 0.\+842, 0.\+910, 1.\+005, 0.\+732, 0.\+695}
+\end{DoxyItemize}
+\item Con esos datos se pueden seleccionar {\ttfamily RAW\+\_\+\+MIN} / {\ttfamily RAW\+\_\+\+MAX} conservadores por dedo y refinar el mapeo.
+\item La librería ya está estructurada para poder reemplazar los umbrales globales por arrays por dedo si se desea.
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md28}{}\doxysection{\texorpdfstring{7. Polling + IRQ en el diseño (para el informe)}{7. Polling + IRQ en el diseño (para el informe)}}\label{md__r_e_a_d_m_e_autotoc_md28}
+El proyecto combina explícitamente {\bfseries{polling}} e {\bfseries{interrupciones}}\+:
+
+
+\begin{DoxyItemize}
+\item {\bfseries{En el GUANTE (cliente)\+:}}
+\begin{DoxyItemize}
+\item IRQ\+:
+\begin{DoxyItemize}
+\item Timer ({\ttfamily repeating\+\_\+timer}) que marca los instantes de muestreo/envío levantando una bandera.
+\end{DoxyItemize}
+\item Polling\+:
+\begin{DoxyItemize}
+\item Bucle principal revisa esa bandera, lee sensores, arma trama y envía UDP.
+\item {\ttfamily cyw43\+\_\+arch\+\_\+poll()} mueve la pila de red.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\item {\bfseries{En la MANO (servidor)\+:}}
+\begin{DoxyItemize}
+\item IRQ\+:
+\begin{DoxyItemize}
+\item Timer ({\ttfamily repeating\+\_\+timer}) usado como “heartbeat” para el LED.
+\end{DoxyItemize}
+\item Polling\+:
+\begin{DoxyItemize}
+\item Bucle principal llama a {\ttfamily cyw43\+\_\+arch\+\_\+poll()}.
+\item Comprueba si hay nuevos datos desde el callback UDP y, si los hay, actualiza servos.
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyItemize}
+
+Esta separación deja la lógica pesada (ADC, Wi-\/\+Fi, UDP, I²C, servos) fuera de las IRQ y cumple el requisito académico de usar ambos mecanismos.
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md30}{}\doxysection{\texorpdfstring{10. Créditos}{10. Créditos}}\label{md__r_e_a_d_m_e_autotoc_md30}
+Proyecto desarrollado en C sobre Raspberry Pi Pico W, usando el Pico SDK, ~\newline
+ el stack de red lw\+IP y el módulo Wi-\/\+Fi CYW43, con un enfoque en ~\newline
+ teleoperación, comunicaciones embebidas y control de movimiento en tiempo real. 

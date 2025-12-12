@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Mimic Hand Client: Mimic Hand – Mano robótica teleoperada con Raspberry Pi Pico W</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Mimic Hand Client
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',false);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div id="doc-content">
+<div><div class="header">
+  <div class="headertitle"><div class="title">Mimic Hand – Mano robótica teleoperada con Raspberry Pi Pico W </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<p>Proyecto de una mano robótica mimética controlada mediante un guante instrumentado, usando <b>dos Raspberry Pi Pico W</b> que se comunican por <b>Wi-Fi (UDP)</b>.</p>
+<ul>
+<li><b>GUANTE (cliente)</b>: lee la flexión de los dedos con sensores Hall + ADC. <br  />
+</li>
+<li><b>MANO (servidor)</b>: recibe los datos por UDP y mueve servomotores vía PCA9685. <br  />
+</li>
+<li><b>Red</b>: ambos Picos conectados como <b>STA</b> a un <b>hotspot de celular</b>, no se usa el Pico como AP.</li>
+</ul>
+<p>Este README está pensado para el repositorio Git del proyecto.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+1. Resumen del funcionamiento</h1>
+<ol type="1">
+<li>El <b>Pico de la mano</b>:<ul>
+<li>Se conecta al hotspot.</li>
+<li>Imprime su IP en el monitor serie.</li>
+<li>Inicia el driver PCA9685 (I²C) y coloca los servos en posición inicial.</li>
+<li>Crea un servidor UDP en el puerto <span class="tt">4242</span>.</li>
+<li>Cuando recibe tramas del guante, convierte los valores discretos de cada dedo a anchos de pulso y actualiza los servos.</li>
+</ul>
+</li>
+<li>El <b>Pico del guante</b>:<ul>
+<li>Se conecta al mismo hotspot.</li>
+<li>Inicia ADC + multiplexor de sensores Hall.</li>
+<li>Usa un <b>timer en IRQ</b> para marcar cada cuánto enviar datos.</li>
+<li>En el bucle principal (polling), cuando toca enviar:<ul>
+<li>Lee los 5 dedos.</li>
+<li>Normaliza cada uno a un rango discreto <span class="tt">0–9</span>.</li>
+<li>Forma una trama <span class="tt">H,v0,v1,v2,v3,v4</span>.</li>
+<li>La manda por UDP a la IP de la mano.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>El sistema está optimizado para:<ul>
+<li>Movimiento continuo. <br  />
+</li>
+<li>Baja latencia. <br  />
+</li>
+<li>Tolerancia a pérdida de paquetes (no hay ACK ni reintentos).</li>
+</ul>
+</li>
+</ol>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+2. Estructura del repositorio</h1>
+<p>Estructura sugerida (puede variar un poco según tu proyecto):</p>
+<div class="fragment"><div class="line">.</div>
+<div class="line">├─ CMakeLists.txt</div>
+<div class="line">├─ README.md</div>
+<div class="line">├─ src/</div>
+<div class="line">│  ├─ Pico_Server.c        # Mano robótica (servidor UDP)</div>
+<div class="line">│  ├─ Pico_Client.c        # Guante (cliente UDP)</div>
+<div class="line">│  └─ lwipopts.h           # Configuración lwIP para Pico W</div>
+<div class="line">└─ lib/</div>
+<div class="line">   ├─ servo/</div>
+<div class="line">   │  ├─ servo.h           # API de alto nivel para PCA9685 + servos</div>
+<div class="line">   │  └─ servo.c</div>
+<div class="line">   └─ guante/</div>
+<div class="line">      ├─ guante.h          # API de alto nivel del guante (ADC + MUX)</div>
+<div class="line">      └─ guante.c</div>
+</div><!-- fragment --><hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+3. Arquitectura de hardware</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+Guante (cliente)</h2>
+<ul>
+<li>Raspberry Pi Pico W. <br  />
+</li>
+<li>5× sensores Hall (uno por dedo) + imanes. <br  />
+</li>
+<li>Multiplexor analógico para seleccionar qué sensor leer. <br  />
+</li>
+<li>ADC0 en GPIO26 para medir el voltaje del sensor seleccionado. <br  />
+</li>
+<li>Alimentación compartida para Pico + sensores.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+Mano robótica (servidor)</h2>
+<ul>
+<li>Raspberry Pi Pico W. <br  />
+</li>
+<li>Driver PCA9685 por I²C (p. ej. <span class="tt">i2c1</span>, pines SDA/SCL). <br  />
+</li>
+<li>Servomotores conectados a los canales del PCA9685. <br  />
+</li>
+<li>Fuente de servos independiente, con <b>masa común</b> con la lógica.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+Red</h2>
+<ul>
+<li>Hotspot de un teléfono (iOS). <br  />
+</li>
+<li>Ambos Picos como <b>STA</b>:<ul>
+<li>El hotspot asigna IP por DHCP.</li>
+<li>El servidor imprime su IP (<span class="tt">IP_SERVER</span>).</li>
+<li>El cliente la usa como <span class="tt">SERVER_IP</span> para los paquetes UDP.</li>
+</ul>
+</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+4. Arquitectura de software</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+4.1. <span class="tt">Pico_Server.c</span> (MANO – Servidor UDP)</h2>
+<p>Responsabilidades:</p>
+<ul>
+<li>Inicializa:<ul>
+<li>stdio/USB para logs, <br  />
+</li>
+<li>Wi-Fi en modo STA, <br  />
+</li>
+<li>conexión al hotspot (SSID y contraseña configurables).</li>
+</ul>
+</li>
+<li>Imprime por serial la <b>IP del servidor</b> (para configurarla en el guante).</li>
+<li>Inicializa el PCA9685 vía <span class="tt">servo_init(...)</span> y sitúa los servos en posición segura.</li>
+<li>Crea un <b>servidor UDP</b>:<ul>
+<li><span class="tt">udp_new_ip_type</span>, <span class="tt">udp_bind</span>, <span class="tt">udp_recv</span>.</li>
+</ul>
+</li>
+<li>Callback de recepción UDP:<ul>
+<li>Recibe tramas de texto: <span class="tt">H,v0,v1,v2,v3,v4</span>.</li>
+<li>Valida número de campos y rango (<span class="tt">0–9</span>).</li>
+<li>Actualiza un búfer de valores de dedos + una bandera de “nuevo dato”.</li>
+<li>Imprime la trama y el conteo de paquetes recibidos.</li>
+</ul>
+</li>
+<li>Bucle principal (polling):<ul>
+<li>Llama regularmente a <span class="tt">cyw43_arch_poll()</span> (mover la pila lwIP).</li>
+<li>Si hay nuevos datos: copia los valores y llama a la lógica que:<ul>
+<li>convierte <span class="tt">0–9</span> a un ancho de pulso en microsegundos,</li>
+<li>opcionalmente invierte algún dedo según el montaje,</li>
+<li>llama a <span class="tt">servo_set_us()</span> para cada dedo.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Timer en IRQ:<ul>
+<li><span class="tt">repeating_timer</span> que solo parpadea el LED integrado como “heartbeat”.</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+4.2. <span class="tt">Pico_Client.c</span> (GUANTE – Cliente UDP)</h2>
+<p>Responsabilidades:</p>
+<ul>
+<li>Inicializa:<ul>
+<li>stdio/USB, <br  />
+</li>
+<li>Wi-Fi en modo STA, <br  />
+</li>
+<li>conexión al mismo hotspot.</li>
+</ul>
+</li>
+<li>Inicializa el guante (<span class="tt"><a class="el" href="guante_8c.html#a57435129a0bd0b526eb8df8a6de1b053" title="Inicializa los pines del MUX y el ADC para lectura del guante.">guante_init()</a></span>):<ul>
+<li>ADC, <br  />
+</li>
+<li>pines del multiplexor.</li>
+</ul>
+</li>
+<li>Crea un <b>cliente UDP</b> conectado a <span class="tt">SERVER_IP:4242</span>.</li>
+<li>Configura un <b>timer en interrupción</b>:<ul>
+<li>Un <span class="tt">repeating_timer</span> que cada X ms levanta una bandera <span class="tt">flag_timer_send</span>.</li>
+</ul>
+</li>
+<li>Bucle principal (polling):<ul>
+<li>Llama a <span class="tt">cyw43_arch_poll()</span>.</li>
+<li>Cuando <span class="tt">flag_timer_send</span> está activa:<ul>
+<li>La limpia.</li>
+<li>Llama a <span class="tt">guante_leer_dedos(...)</span> para obtener los 5 valores normalizados <span class="tt">0–9</span>.</li>
+<li>Forma una trama ASCII <span class="tt">H,v0,v1,v2,v3,v4</span>.</li>
+<li>Usa <span class="tt">udp_send</span> para transmitirla.</li>
+<li>Imprime en consola la trama enviada y el número de paquete.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+4.3. <span class="tt">lib/servo/servo.h</span> – <span class="tt">servo.c</span></h2>
+<p>Responsabilidades:</p>
+<ul>
+<li>Encapsula el acceso al PCA9685:<ul>
+<li>Configura dirección I²C, frecuencia de PWM, modo Auto-Increment.</li>
+<li>Calcula el prescaler adecuado para la frecuencia deseada.</li>
+</ul>
+</li>
+<li>Proporciona funciones de alto nivel:<ul>
+<li><span class="tt">servo_init(servo_pca_t *dev)</span> – setup completo del PCA9685.</li>
+<li><span class="tt">servo_set_us(dev, canal, ancho_us)</span> – asignar un pulso en microsegundos a un canal.</li>
+</ul>
+</li>
+<li>Internamente:<ul>
+<li>Convierte µs → cuentas de 12 bits (0–4095).</li>
+<li>Aplica límites de seguridad (<span class="tt">SERVO_US_MIN</span>, <span class="tt">SERVO_US_MAX</span>).</li>
+</ul>
+</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+4.4. <span class="tt">lib/guante/guante.h</span> – <span class="tt">guante.c</span></h2>
+<p>Responsabilidades:</p>
+<ul>
+<li>Configura ADC y pines del MUX (selección de dedo).</li>
+<li>Para cada dedo:<ul>
+<li>Selecciona el canal del MUX.</li>
+<li>Lee el ADC (valor crudo).</li>
+<li>Lo convierte a voltaje (para depuración).</li>
+<li>Lo mapea a un rango discreto <span class="tt">0–9</span> usando umbrales globales <span class="tt">RAW_MIN</span> / <span class="tt">RAW_MAX</span>.</li>
+</ul>
+</li>
+<li>Ofrece una API simple:<ul>
+<li><span class="tt"><a class="el" href="guante_8c.html#a57435129a0bd0b526eb8df8a6de1b053" title="Inicializa los pines del MUX y el ADC para lectura del guante.">guante_init()</a></span> – inicialización de hardware.</li>
+<li><span class="tt">guante_leer_dedos(uint8_t out[5])</span> – rellena el arreglo con valores <span class="tt">0–9</span>.</li>
+</ul>
+</li>
+<li>Durante la fase de calibración:<ul>
+<li>Imprime por consola las tensiones de cada dedo en una sola línea para poder observar mínimos y máximos.</li>
+</ul>
+</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+5. Protocolo de comunicación</h1>
+<ul>
+<li>Transporte: <b>UDP</b> sobre IPv4. <br  />
+</li>
+<li>Puerto: <span class="tt">4242</span>. <br  />
+</li>
+<li>Servidor: IP asignada por el hotspot (p. ej. <span class="tt">172.20.10.2</span>). <br  />
+</li>
+<li>Cliente: IP también asignada por el hotspot (p. ej. <span class="tt">172.20.10.3</span>.</li>
+</ul>
+<p>Formato de trama (texto ASCII):</p>
+<div class="fragment"><div class="line">H,v0,v1,v2,v3,v4</div>
+</div><!-- fragment --><ul>
+<li><span class="tt">H</span> → identificador de cabecera. <br  />
+</li>
+<li><span class="tt">v0..v4</span> → enteros <span class="tt">0–9</span> (flexión de cada dedo ya normalizada).</li>
+</ul>
+<p>Características del protocolo:</p>
+<ul>
+<li>No hay ACK, ni números de secuencia, ni retransmisión. <br  />
+</li>
+<li>Si se pierde un paquete, simplemente se usa el siguiente estado. <br  />
+</li>
+<li>Diseño intencional: priorizar movimiento fluido y baja latencia frente a fiabilidad absoluta.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+6. Problemas importantes y soluciones</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+6.1. Pico como AP → congelamientos de la red</h2>
+<p><b>Problema:</b></p>
+<ul>
+<li>En las primeras versiones, la Pico de la mano funcionaba como <b>punto de acceso (AP)</b>.</li>
+<li>Tras cierto número de paquetes, el receptor:<ul>
+<li>Dejaba de entrar al callback de UDP.</li>
+<li>Se quedaba con <span class="tt">packet_count</span> fijo.</li>
+<li>El programa no se colgaba por completo, pero la recepción de datos sí.</li>
+</ul>
+</li>
+</ul>
+<p><b>Causa probable:</b></p>
+<ul>
+<li>Limitaciones / bugs del stack de red en modo AP del Pico W (buffers, manejo de colas, etc.).</li>
+</ul>
+<p><b>Solución:</b></p>
+<ul>
+<li>Cambiar la topología:<ul>
+<li>Hotspot de celular como <b>AP externo</b>.</li>
+<li>Ambos Picos como <b>STA</b>.</li>
+</ul>
+</li>
+<li>Resultado:<ul>
+<li>Desaparecen los congelamientos de recepción.</li>
+<li>La comunicación se vuelve estable a largo plazo.</li>
+</ul>
+</li>
+</ul>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+6.2. Watchdog + conexión Wi-Fi bloqueante</h2>
+<p><b>Problema:</b></p>
+<ul>
+<li>Se habilitó el watchdog con timeout de ~8 s.</li>
+<li>La función de conexión Wi-Fi (<span class="tt">cyw43_arch_wifi_connect_timeout_ms</span>) puede bloquear hasta ~15 s.</li>
+<li>Al no llamar a <span class="tt">watchdog_update()</span> durante ese tiempo, la Pico se reiniciaba.</li>
+<li>En el monitor serie se veía que intentaba conectar y el puerto se cerraba una y otra vez.</li>
+</ul>
+<p><b>Solución:</b></p>
+<ul>
+<li>Desactivar el watchdog durante la fase de conexión Wi-Fi.</li>
+<li>(Opcional futuro) volver a activarlo, pero solo después de estar conectados, refrescándolo en el bucle principal.</li>
+</ul>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+6.3. Lógica de sensores invertida (7 abierto, 0 cerrado)</h2>
+<p><b>Problema:</b></p>
+<ul>
+<li>El hardware entregaba valores normalizados con “signo” opuesto:<ul>
+<li>Mano abierta → valor alto.</li>
+<li>Mano cerrada → valor bajo.</li>
+</ul>
+</li>
+<li>Para la mano robótica era más natural:<ul>
+<li><span class="tt">0</span> → dedo abierto.</li>
+<li>valor máximo → dedo cerrado.</li>
+</ul>
+</li>
+</ul>
+<p><b>Solución:</b></p>
+<ul>
+<li><p class="startli">Mantener la normalización cruda <span class="tt">0–9</span> y luego invertir donde corresponde:</p>
+<div class="fragment"><div class="line">nivel_invertido = MAX - nivel;</div>
+</div><!-- fragment --></li>
+<li>Esta inversión se hace en la lógica de la mano para el dedo que lo requiera, de forma transparente para el resto del código.</li>
+</ul>
+<hr  />
+<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+6.4. Calibración de sensores Hall</h2>
+<p><b>Problema:</b></p>
+<ul>
+<li>Cada sensor Hall presenta un rango de tensiones distinto entre:<ul>
+<li>mano totalmente abierta,</li>
+<li>mano totalmente cerrada.</li>
+</ul>
+</li>
+<li>Sin calibración, el mapeo <span class="tt">raw → 0–9</span> podría:<ul>
+<li>saturarse antes del final del recorrido,</li>
+<li>no usar toda la resolución.</li>
+</ul>
+</li>
+</ul>
+<p><b>Solución:</b></p>
+<ul>
+<li>Añadir impresión de voltajes por dedo durante las pruebas:<ul>
+<li>Ejemplo: <br  />
+ <span class="tt">Vdedos: 0.842, 0.910, 1.005, 0.732, 0.695</span></li>
+</ul>
+</li>
+<li>Con esos datos se pueden seleccionar <span class="tt">RAW_MIN</span> / <span class="tt">RAW_MAX</span> conservadores por dedo y refinar el mapeo.</li>
+<li>La librería ya está estructurada para poder reemplazar los umbrales globales por arrays por dedo si se desea.</li>
+</ul>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+7. Polling + IRQ en el diseño (para el informe)</h1>
+<p>El proyecto combina explícitamente <b>polling</b> e <b>interrupciones</b>:</p>
+<ul>
+<li><b>En el GUANTE (cliente):</b><ul>
+<li>IRQ:<ul>
+<li>Timer (<span class="tt">repeating_timer</span>) que marca los instantes de muestreo/envío levantando una bandera.</li>
+</ul>
+</li>
+<li>Polling:<ul>
+<li>Bucle principal revisa esa bandera, lee sensores, arma trama y envía UDP.</li>
+<li><span class="tt">cyw43_arch_poll()</span> mueve la pila de red.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><b>En la MANO (servidor):</b><ul>
+<li>IRQ:<ul>
+<li>Timer (<span class="tt">repeating_timer</span>) usado como “heartbeat” para el LED.</li>
+</ul>
+</li>
+<li>Polling:<ul>
+<li>Bucle principal llama a <span class="tt">cyw43_arch_poll()</span>.</li>
+<li>Comprueba si hay nuevos datos desde el callback UDP y, si los hay, actualiza servos.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Esta separación deja la lógica pesada (ADC, Wi-Fi, UDP, I²C, servos) fuera de las IRQ y cumple el requisito académico de usar ambos mecanismos.</p>
+<hr  />
+<h1 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+10. Créditos</h1>
+<p>Proyecto desarrollado en C sobre Raspberry Pi Pico W, usando el Pico SDK, <br  />
+ el stack de red lwIP y el módulo Wi-Fi CYW43, con un enfoque en <br  />
+ teleoperación, comunicaciones embebidas y control de movimiento en tiempo real. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>

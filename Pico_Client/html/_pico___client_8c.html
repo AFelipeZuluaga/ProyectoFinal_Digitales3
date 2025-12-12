@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Mimic Hand Client: Referencia del archivo Pico_Client.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Mimic Hand Client
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',false);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo Pico_Client.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Cliente UDP (guante) para enviar posiciones de los dedos a la mano robótica.  
+<a href="#details">Más...</a></p>
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;pico/stdlib.h&quot;</code><br />
+<code>#include &quot;pico/cyw43_arch.h&quot;</code><br />
+<code>#include &quot;lwip/udp.h&quot;</code><br />
+<code>#include &quot;hardware/timer.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="guante_8h_source.html">lib/guante/guante.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a586542b79d00e4db7e1d5a667ae83a2b" id="r_a586542b79d00e4db7e1d5a667ae83a2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a586542b79d00e4db7e1d5a667ae83a2b">WIFI_SSID</a>&#160;&#160;&#160;&quot;iPhone de Felipe&quot;</td></tr>
+<tr class="memdesc:a586542b79d00e4db7e1d5a667ae83a2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">SSID del hotspot Wi-Fi al que se conecta el guante.  <br /></td></tr>
+<tr class="memitem:a8685d8aff7e570048090a3a51afceb07" id="r_a8685d8aff7e570048090a3a51afceb07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8685d8aff7e570048090a3a51afceb07">WIFI_PASSWORD</a>&#160;&#160;&#160;&quot;ff11223344&quot;</td></tr>
+<tr class="memdesc:a8685d8aff7e570048090a3a51afceb07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contraseña del hotspot Wi-Fi.  <br /></td></tr>
+<tr class="memitem:a28d06fc286f28044ed3380969700ff3f" id="r_a28d06fc286f28044ed3380969700ff3f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28d06fc286f28044ed3380969700ff3f">SERVER_IP</a>&#160;&#160;&#160;&quot;172.20.10.2&quot;</td></tr>
+<tr class="memdesc:a28d06fc286f28044ed3380969700ff3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dirección IP del servidor (mano robótica).  <br /></td></tr>
+<tr class="memitem:a7342deb9bd9ebf195e550e2d8e7c38b4" id="r_a7342deb9bd9ebf195e550e2d8e7c38b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7342deb9bd9ebf195e550e2d8e7c38b4">UDP_PORT</a>&#160;&#160;&#160;4242</td></tr>
+<tr class="memdesc:a7342deb9bd9ebf195e550e2d8e7c38b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puerto UDP usado para enviar las tramas al servidor.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:ab895fc42f5b02b157111681fd1465632" id="r_ab895fc42f5b02b157111681fd1465632"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab895fc42f5b02b157111681fd1465632">send_timer_callback</a> (struct repeating_timer *t)</td></tr>
+<tr class="memdesc:ab895fc42f5b02b157111681fd1465632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback del timer periódico para disparar el envío de datos.  <br /></td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Punto de entrada del cliente (guante).  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Cliente UDP (guante) para enviar posiciones de los dedos a la mano robótica. </p>
+<p>Lee los sensores del guante mediante MUX + ADC y envía una trama UDP periódica hacia el servidor (mano) usando la Pico W y lwIP en modo NO_SYS. </p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentación de «define»</h2>
+<a id="a28d06fc286f28044ed3380969700ff3f" name="a28d06fc286f28044ed3380969700ff3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28d06fc286f28044ed3380969700ff3f">&#9670;&#160;</a></span>SERVER_IP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVER_IP&#160;&#160;&#160;&quot;172.20.10.2&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dirección IP del servidor (mano robótica). </p>
+
+</div>
+</div>
+<a id="a7342deb9bd9ebf195e550e2d8e7c38b4" name="a7342deb9bd9ebf195e550e2d8e7c38b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7342deb9bd9ebf195e550e2d8e7c38b4">&#9670;&#160;</a></span>UDP_PORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UDP_PORT&#160;&#160;&#160;4242</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Puerto UDP usado para enviar las tramas al servidor. </p>
+
+</div>
+</div>
+<a id="a8685d8aff7e570048090a3a51afceb07" name="a8685d8aff7e570048090a3a51afceb07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8685d8aff7e570048090a3a51afceb07">&#9670;&#160;</a></span>WIFI_PASSWORD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WIFI_PASSWORD&#160;&#160;&#160;&quot;ff11223344&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contraseña del hotspot Wi-Fi. </p>
+
+</div>
+</div>
+<a id="a586542b79d00e4db7e1d5a667ae83a2b" name="a586542b79d00e4db7e1d5a667ae83a2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a586542b79d00e4db7e1d5a667ae83a2b">&#9670;&#160;</a></span>WIFI_SSID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WIFI_SSID&#160;&#160;&#160;&quot;iPhone de Felipe&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SSID del hotspot Wi-Fi al que se conecta el guante. </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Punto de entrada del cliente (guante). </p>
+<p>Inicializa stdio, Wi-Fi, la librería del guante y la conexión UDP. Configura un timer en IRQ cada 250 ms y, en el loop principal, realiza polling de la pila de red y envía tramas periódicas con las lecturas de los dedos.</p>
+<dl class="section return"><dt>Devuelve</dt><dd>0 en operación normal, 1 si falla la inicialización. </dd></dl>
+
+</div>
+</div>
+<a id="ab895fc42f5b02b157111681fd1465632" name="ab895fc42f5b02b157111681fd1465632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab895fc42f5b02b157111681fd1465632">&#9670;&#160;</a></span>send_timer_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool send_timer_callback </td>
+          <td>(</td>
+          <td class="paramtype">struct repeating_timer *</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Callback del timer periódico para disparar el envío de datos. </p>
+<p>Solo levanta una bandera para que el envío real se haga en el main, manteniendo la ISR lo más corta posible.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Puntero al timer que generó la interrupción. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>true para que el timer siga repitiéndose. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>

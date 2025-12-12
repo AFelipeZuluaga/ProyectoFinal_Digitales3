@@ -1,0 +1,44 @@
+\doxysection{lwipopts.\+h}
+\hypertarget{lwipopts_8h_source}{}\label{lwipopts_8h_source}\mbox{\hyperlink{lwipopts_8h}{Ir a la documentación de este archivo.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ \_LWIPOPTS\_H}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ \_LWIPOPTS\_H}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ -\/-\/-\/\ Configuración\ General\ -\/-\/-\/}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ NO\_SYS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ LWIP\_SOCKET\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ LWIP\_NETCONN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#define\ LWIP\_IGMP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ LWIP\_ICMP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{//\ -\/-\/-\/\ Gestión\ de\ Memoria\ -\/-\/-\/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ MEM\_LIBC\_MALLOC\ \ \ \ \ \ \ \ \ \ \ \ \ 0}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ MEM\_ALIGNMENT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 4}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ MEM\_SIZE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 4000}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ MEMP\_NUM\_TCP\_SEG\ \ \ \ \ \ \ \ \ \ \ \ 32}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#define\ MEMP\_NUM\_ARP\_QUEUE\ \ \ \ \ \ \ \ \ \ 10}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ PBUF\_POOL\_SIZE\ \ \ \ \ \ \ \ \ \ \ \ \ \ 24}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ -\/-\/-\/\ Configuración\ TCP\ -\/-\/-\/}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ LWIP\_TCP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ TCP\_MSS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1460}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ TCP\_WND\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8\ *\ TCP\_MSS)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#define\ TCP\_SND\_BUF\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (8\ *\ TCP\_MSS)}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ TCP\_SND\_QUEUELEN\ \ \ \ \ \ \ \ \ \ \ \ ((4\ *\ (TCP\_SND\_BUF)\ +\ (TCP\_MSS\ -\/\ 1))\ /\ (TCP\_MSS))}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{comment}{//\ -\/-\/-\/\ Configuración\ UDP\ -\/-\/-\/}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ LWIP\_UDP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{comment}{//\ -\/-\/-\/\ Configuración\ ARP\ y\ Ethernet\ -\/-\/-\/}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ LWIP\_ARP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ LWIP\_ETHERNET\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ LWIP\_DHCP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 1\ \ }\textcolor{comment}{//\ Importante\ para\ obtener\ IP\ del\ router}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{comment}{//\ -\/-\/-\/\ Integración\ con\ la\ Pico\ -\/-\/-\/}}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ LWIP\_RAND()\ ((u32\_t)rand())}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

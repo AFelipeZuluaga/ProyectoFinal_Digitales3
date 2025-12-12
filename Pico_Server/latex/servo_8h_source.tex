@@ -1,0 +1,38 @@
+\doxysection{servo.\+h}
+\hypertarget{servo_8h_source}{}\label{servo_8h_source}\index{C:/Users/luisc/Desktop/Mimic Hand 2/Pico\_Server/lib/servo/servo.h@{C:/Users/luisc/Desktop/Mimic Hand 2/Pico\_Server/lib/servo/servo.h}}
+\mbox{\hyperlink{servo_8h}{Ir a la documentación de este archivo.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#ifndef\ SERVO\_H}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ SERVO\_H}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}hardware/i2c.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ SERVO\_I2C\ \ \ \ \ \ \ \ \ i2c1}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ SERVO\_SDA\_PIN\ \ \ \ \ 2}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ SERVO\_SCL\_PIN\ \ \ \ \ 3}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ PCA9685\_ADDR\ \ \ \ \ \ 0x40}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ SERVO\_FREQ\_HZ\ \ \ \ \ 50.0f}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{/*\ -\/-\/-\/\ RANGOS\ DE\ TRABAJO\ -\/-\/-\/\ */}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ SERVO\_US\_MIN\ \ \ \ \ \ 500.0f}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ SERVO\_US\_CENTER\ \ \ 1500.0f}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ SERVO\_US\_MAX\ \ \ \ \ \ 2400.0f}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{}
+\DoxyCodeLine{00037\ \ \ \ \ i2c\_inst\_t\ *\mbox{\hyperlink{structservo__pca__t_ab604b368deeba7ee4331d5789ebe44b6}{i2c}};\ \ }
+\DoxyCodeLine{00038\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structservo__pca__t_af5105c72a61e60d3b44670de20e0c3fb}{addr}};\ \ \ \ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structservo__pca__t_a16510bf3c619d9e4f85df319f08dd8ec}{freq\_hz}};\ \ \ \ }
+\DoxyCodeLine{00040\ \}\ \mbox{\hyperlink{structservo__pca__t}{servo\_pca\_t}};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{servo_8h_ae5c0ca512977be2a856e2111dde5a500}{servo\_init}}(\mbox{\hyperlink{structservo__pca__t}{servo\_pca\_t}}\ *dev);}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{servo_8h_a2f66ccdf152b0879d5b8f299e6cf3071}{servo\_set\_us}}(\mbox{\hyperlink{structservo__pca__t}{servo\_pca\_t}}\ *dev,\ uint8\_t\ channel,\ \textcolor{keywordtype}{float}\ us);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ SERVO\_H\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

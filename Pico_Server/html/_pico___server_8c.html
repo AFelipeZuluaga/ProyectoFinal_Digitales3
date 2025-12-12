@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Mimic Hand Server: Referencia del archivo C:/Users/luisc/Desktop/Mimic Hand 2/Pico_Server/Pico_Server.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Mimic Hand Server
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',false);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a href="dir_d1a4f3964f788d5894e26a0a4b8ceb76.html">Pico_Server</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#define-members">defines</a> &#124;
+<a href="#func-members">Funciones</a>  </div>
+  <div class="headertitle"><div class="title">Referencia del archivo Pico_Server.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Servidor UDP para controlar una mano robótica con la Raspberry Pi Pico W.  
+<a href="#details">Más...</a></p>
+<div class="textblock"><code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &quot;pico/stdlib.h&quot;</code><br />
+<code>#include &quot;pico/cyw43_arch.h&quot;</code><br />
+<code>#include &quot;lwip/udp.h&quot;</code><br />
+<code>#include &quot;lwip/pbuf.h&quot;</code><br />
+<code>#include &quot;hardware/timer.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="servo_8h_source.html">lib/servo/servo.h</a>&quot;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+defines</h2></td></tr>
+<tr class="memitem:a586542b79d00e4db7e1d5a667ae83a2b" id="r_a586542b79d00e4db7e1d5a667ae83a2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a586542b79d00e4db7e1d5a667ae83a2b">WIFI_SSID</a>&#160;&#160;&#160;&quot;iPhone de Felipe&quot;</td></tr>
+<tr class="memdesc:a586542b79d00e4db7e1d5a667ae83a2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">SSID de la red Wi-Fi (hotspot) a la que se conecta la Pico W.  <br /></td></tr>
+<tr class="memitem:a8685d8aff7e570048090a3a51afceb07" id="r_a8685d8aff7e570048090a3a51afceb07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8685d8aff7e570048090a3a51afceb07">WIFI_PASSWORD</a>&#160;&#160;&#160;&quot;ff11223344&quot;</td></tr>
+<tr class="memdesc:a8685d8aff7e570048090a3a51afceb07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Contraseña de la red Wi-Fi (hotspot).  <br /></td></tr>
+<tr class="memitem:a7342deb9bd9ebf195e550e2d8e7c38b4" id="r_a7342deb9bd9ebf195e550e2d8e7c38b4"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7342deb9bd9ebf195e550e2d8e7c38b4">UDP_PORT</a>&#160;&#160;&#160;4242</td></tr>
+<tr class="memdesc:a7342deb9bd9ebf195e550e2d8e7c38b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puerto UDP en el que escucha el servidor de la mano.  <br /></td></tr>
+<tr class="memitem:aecd0afce4ee29b41810d1184887f73d5" id="r_aecd0afce4ee29b41810d1184887f73d5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecd0afce4ee29b41810d1184887f73d5">NUM_FINGERS</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:aecd0afce4ee29b41810d1184887f73d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Número de dedos controlados por la mano robótica.  <br /></td></tr>
+<tr class="memitem:aff4b1376965cfdb32a775db8565d2540" id="r_aff4b1376965cfdb32a775db8565d2540"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff4b1376965cfdb32a775db8565d2540">VMAX</a>&#160;&#160;&#160;9</td></tr>
+<tr class="memdesc:aff4b1376965cfdb32a775db8565d2540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valor máximo esperado desde el guante (rango efectivo).  <br /></td></tr>
+<tr class="memitem:a1b9e821ed46d85bae53c498bca6dbffe" id="r_a1b9e821ed46d85bae53c498bca6dbffe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b9e821ed46d85bae53c498bca6dbffe">SENSOR_FLOOR</a>&#160;&#160;&#160;2</td></tr>
+<tr class="memdesc:a1b9e821ed46d85bae53c498bca6dbffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Umbral mínimo del sensor para filtrar ruido.  <br /></td></tr>
+<tr class="memitem:a46766810051a078151b66697287cf873" id="r_a46766810051a078151b66697287cf873"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46766810051a078151b66697287cf873">INVERT_FINGER_INDEX</a>&#160;&#160;&#160;4</td></tr>
+<tr class="memdesc:a46766810051a078151b66697287cf873"><td class="mdescLeft">&#160;</td><td class="mdescRight">Índice de dedo cuyo movimiento debe invertirse por montaje físico.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:adc34f9a1088ae8461f5b82d18832958b" id="r_adc34f9a1088ae8461f5b82d18832958b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc34f9a1088ae8461f5b82d18832958b">heartbeat_timer_callback</a> (struct repeating_timer *t)</td></tr>
+<tr class="memdesc:adc34f9a1088ae8461f5b82d18832958b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback periódico del timer para generar un "heartbeat" con el LED.  <br /></td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="memdesc:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Punto de entrada del servidor de la mano robótica.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p>Servidor UDP para controlar una mano robótica con la Raspberry Pi Pico W. </p>
+<p>Recibe tramas desde un guante con sensores Hall vía Wi-Fi (UDP) y actualiza los servomotores de cada dedo usando un PCA9685. </p>
+</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Documentación de «define»</h2>
+<a id="a46766810051a078151b66697287cf873" name="a46766810051a078151b66697287cf873"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46766810051a078151b66697287cf873">&#9670;&#160;</a></span>INVERT_FINGER_INDEX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define INVERT_FINGER_INDEX&#160;&#160;&#160;4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Índice de dedo cuyo movimiento debe invertirse por montaje físico. </p>
+
+</div>
+</div>
+<a id="aecd0afce4ee29b41810d1184887f73d5" name="aecd0afce4ee29b41810d1184887f73d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecd0afce4ee29b41810d1184887f73d5">&#9670;&#160;</a></span>NUM_FINGERS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define NUM_FINGERS&#160;&#160;&#160;5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Número de dedos controlados por la mano robótica. </p>
+
+</div>
+</div>
+<a id="a1b9e821ed46d85bae53c498bca6dbffe" name="a1b9e821ed46d85bae53c498bca6dbffe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b9e821ed46d85bae53c498bca6dbffe">&#9670;&#160;</a></span>SENSOR_FLOOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SENSOR_FLOOR&#160;&#160;&#160;2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Umbral mínimo del sensor para filtrar ruido. </p>
+
+</div>
+</div>
+<a id="a7342deb9bd9ebf195e550e2d8e7c38b4" name="a7342deb9bd9ebf195e550e2d8e7c38b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7342deb9bd9ebf195e550e2d8e7c38b4">&#9670;&#160;</a></span>UDP_PORT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define UDP_PORT&#160;&#160;&#160;4242</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Puerto UDP en el que escucha el servidor de la mano. </p>
+
+</div>
+</div>
+<a id="aff4b1376965cfdb32a775db8565d2540" name="aff4b1376965cfdb32a775db8565d2540"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff4b1376965cfdb32a775db8565d2540">&#9670;&#160;</a></span>VMAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define VMAX&#160;&#160;&#160;9</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Valor máximo esperado desde el guante (rango efectivo). </p>
+
+</div>
+</div>
+<a id="a8685d8aff7e570048090a3a51afceb07" name="a8685d8aff7e570048090a3a51afceb07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8685d8aff7e570048090a3a51afceb07">&#9670;&#160;</a></span>WIFI_PASSWORD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WIFI_PASSWORD&#160;&#160;&#160;&quot;ff11223344&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Contraseña de la red Wi-Fi (hotspot). </p>
+
+</div>
+</div>
+<a id="a586542b79d00e4db7e1d5a667ae83a2b" name="a586542b79d00e4db7e1d5a667ae83a2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a586542b79d00e4db7e1d5a667ae83a2b">&#9670;&#160;</a></span>WIFI_SSID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define WIFI_SSID&#160;&#160;&#160;&quot;iPhone de Felipe&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>SSID de la red Wi-Fi (hotspot) a la que se conecta la Pico W. </p>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="adc34f9a1088ae8461f5b82d18832958b" name="adc34f9a1088ae8461f5b82d18832958b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc34f9a1088ae8461f5b82d18832958b">&#9670;&#160;</a></span>heartbeat_timer_callback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool heartbeat_timer_callback </td>
+          <td>(</td>
+          <td class="paramtype">struct repeating_timer *</td>          <td class="paramname"><span class="paramname"><em>t</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Callback periódico del timer para generar un "heartbeat" con el LED. </p>
+<p>Parpadea el LED de la Pico W para indicar que el sistema está en ejecución.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Puntero al temporizador que generó la interrupción. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>true para mantener el temporizador repitiéndose. </dd></dl>
+
+</div>
+</div>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Punto de entrada del servidor de la mano robótica. </p>
+<p>Inicializa UART/STDIO, Wi-Fi, el controlador de servos, configura el servidor UDP y un timer de heartbeat. En el bucle principal, realiza polling de Wi-Fi y aplica nuevos valores de dedos cuando llegan tramas válidas.</p>
+<dl class="section return"><dt>Devuelve</dt><dd>0 en funcionamiento normal, 1 en caso de error de inicialización. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>

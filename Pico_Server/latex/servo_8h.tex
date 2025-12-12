@@ -1,0 +1,154 @@
+\doxysection{Referencia del archivo C\+:/\+Users/luisc/\+Desktop/\+Mimic Hand 2/\+Pico\+\_\+\+Server/lib/servo/servo.h}
+\hypertarget{servo_8h}{}\label{servo_8h}\index{C:/Users/luisc/Desktop/Mimic Hand 2/Pico\_Server/lib/servo/servo.h@{C:/Users/luisc/Desktop/Mimic Hand 2/Pico\_Server/lib/servo/servo.h}}
+
+
+Interfaz del driver PCA9685 para servomotores.  
+
+
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include "{}hardware/i2c.\+h"{}}\newline
+\doxysubsubsection*{Estructuras de datos}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structservo__pca__t}{servo\+\_\+pca\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Descriptor del controlador PCA9685. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{servo_8h_a4a40e7fe2b88a4747ea071873e6f512e}{SERVO\+\_\+\+I2C}}~i2c1
+\item 
+\#define \mbox{\hyperlink{servo_8h_a902586424917b1e2eeddded30d633274}{SERVO\+\_\+\+SDA\+\_\+\+PIN}}~2
+\item 
+\#define \mbox{\hyperlink{servo_8h_a53c0179c227f863a61657cd0730782af}{SERVO\+\_\+\+SCL\+\_\+\+PIN}}~3
+\item 
+\#define \mbox{\hyperlink{servo_8h_aeec90b1deeeda60215a56e0beb853358}{PCA9685\+\_\+\+ADDR}}~0x40
+\item 
+\#define \mbox{\hyperlink{servo_8h_aaa7c5c7973c5f196d707256aed5dbbb2}{SERVO\+\_\+\+FREQ\+\_\+\+HZ}}~50.\+0f
+\item 
+\#define \mbox{\hyperlink{servo_8h_a5275c9f2f5c94c9631de73a93169ace2}{SERVO\+\_\+\+US\+\_\+\+MIN}}~500.\+0f
+\item 
+\#define \mbox{\hyperlink{servo_8h_a78d468eed63eb5f2bc16cf3593ac2060}{SERVO\+\_\+\+US\+\_\+\+CENTER}}~1500.\+0f
+\item 
+\#define \mbox{\hyperlink{servo_8h_a19b281d27f18f896b929e71c71e6a9ba}{SERVO\+\_\+\+US\+\_\+\+MAX}}~2400.\+0f
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Funciones}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{servo_8h_ae5c0ca512977be2a856e2111dde5a500}{servo\+\_\+init}} (\mbox{\hyperlink{structservo__pca__t}{servo\+\_\+pca\+\_\+t}} \texorpdfstring{$\ast$}{*}dev)
+\begin{DoxyCompactList}\small\item\em Inicializa el PCA9685 y el bus I2C. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{servo_8h_a2f66ccdf152b0879d5b8f299e6cf3071}{servo\+\_\+set\+\_\+us}} (\mbox{\hyperlink{structservo__pca__t}{servo\+\_\+pca\+\_\+t}} \texorpdfstring{$\ast$}{*}dev, uint8\+\_\+t channel, float us)
+\begin{DoxyCompactList}\small\item\em Configura el pulso de un canal en microsegundos. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descripción detallada}
+Interfaz del driver PCA9685 para servomotores. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{servo_8h_doc-define-members}
+\doxysubsection{Documentación de «define»}
+\Hypertarget{servo_8h_aeec90b1deeeda60215a56e0beb853358}\index{servo.h@{servo.h}!PCA9685\_ADDR@{PCA9685\_ADDR}}
+\index{PCA9685\_ADDR@{PCA9685\_ADDR}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{PCA9685\_ADDR}{PCA9685\_ADDR}}
+{\footnotesize\ttfamily \label{servo_8h_aeec90b1deeeda60215a56e0beb853358} 
+\#define PCA9685\+\_\+\+ADDR~0x40}
+
+Dirección I2C del PCA9685. \Hypertarget{servo_8h_aaa7c5c7973c5f196d707256aed5dbbb2}\index{servo.h@{servo.h}!SERVO\_FREQ\_HZ@{SERVO\_FREQ\_HZ}}
+\index{SERVO\_FREQ\_HZ@{SERVO\_FREQ\_HZ}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{SERVO\_FREQ\_HZ}{SERVO\_FREQ\_HZ}}
+{\footnotesize\ttfamily \label{servo_8h_aaa7c5c7973c5f196d707256aed5dbbb2} 
+\#define SERVO\+\_\+\+FREQ\+\_\+\+HZ~50.\+0f}
+
+Frecuencia PWM para servos (Hz). \Hypertarget{servo_8h_a4a40e7fe2b88a4747ea071873e6f512e}\index{servo.h@{servo.h}!SERVO\_I2C@{SERVO\_I2C}}
+\index{SERVO\_I2C@{SERVO\_I2C}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{SERVO\_I2C}{SERVO\_I2C}}
+{\footnotesize\ttfamily \label{servo_8h_a4a40e7fe2b88a4747ea071873e6f512e} 
+\#define SERVO\+\_\+\+I2C~i2c1}
+
+Instancia I2C usada para el controlador de servos. \Hypertarget{servo_8h_a53c0179c227f863a61657cd0730782af}\index{servo.h@{servo.h}!SERVO\_SCL\_PIN@{SERVO\_SCL\_PIN}}
+\index{SERVO\_SCL\_PIN@{SERVO\_SCL\_PIN}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{SERVO\_SCL\_PIN}{SERVO\_SCL\_PIN}}
+{\footnotesize\ttfamily \label{servo_8h_a53c0179c227f863a61657cd0730782af} 
+\#define SERVO\+\_\+\+SCL\+\_\+\+PIN~3}
+
+Pin SCL del bus I2C. \Hypertarget{servo_8h_a902586424917b1e2eeddded30d633274}\index{servo.h@{servo.h}!SERVO\_SDA\_PIN@{SERVO\_SDA\_PIN}}
+\index{SERVO\_SDA\_PIN@{SERVO\_SDA\_PIN}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{SERVO\_SDA\_PIN}{SERVO\_SDA\_PIN}}
+{\footnotesize\ttfamily \label{servo_8h_a902586424917b1e2eeddded30d633274} 
+\#define SERVO\+\_\+\+SDA\+\_\+\+PIN~2}
+
+Pin SDA del bus I2C. \Hypertarget{servo_8h_a78d468eed63eb5f2bc16cf3593ac2060}\index{servo.h@{servo.h}!SERVO\_US\_CENTER@{SERVO\_US\_CENTER}}
+\index{SERVO\_US\_CENTER@{SERVO\_US\_CENTER}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{SERVO\_US\_CENTER}{SERVO\_US\_CENTER}}
+{\footnotesize\ttfamily \label{servo_8h_a78d468eed63eb5f2bc16cf3593ac2060} 
+\#define SERVO\+\_\+\+US\+\_\+\+CENTER~1500.\+0f}
+
+Pulso central del servo (µs). \Hypertarget{servo_8h_a19b281d27f18f896b929e71c71e6a9ba}\index{servo.h@{servo.h}!SERVO\_US\_MAX@{SERVO\_US\_MAX}}
+\index{SERVO\_US\_MAX@{SERVO\_US\_MAX}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{SERVO\_US\_MAX}{SERVO\_US\_MAX}}
+{\footnotesize\ttfamily \label{servo_8h_a19b281d27f18f896b929e71c71e6a9ba} 
+\#define SERVO\+\_\+\+US\+\_\+\+MAX~2400.\+0f}
+
+Pulso máximo del servo (µs). \Hypertarget{servo_8h_a5275c9f2f5c94c9631de73a93169ace2}\index{servo.h@{servo.h}!SERVO\_US\_MIN@{SERVO\_US\_MIN}}
+\index{SERVO\_US\_MIN@{SERVO\_US\_MIN}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{SERVO\_US\_MIN}{SERVO\_US\_MIN}}
+{\footnotesize\ttfamily \label{servo_8h_a5275c9f2f5c94c9631de73a93169ace2} 
+\#define SERVO\+\_\+\+US\+\_\+\+MIN~500.\+0f}
+
+Pulso mínimo del servo (µs). 
+
+\label{doc-func-members}
+\Hypertarget{servo_8h_doc-func-members}
+\doxysubsection{Documentación de funciones}
+\Hypertarget{servo_8h_ae5c0ca512977be2a856e2111dde5a500}\index{servo.h@{servo.h}!servo\_init@{servo\_init}}
+\index{servo\_init@{servo\_init}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{servo\_init()}{servo\_init()}}
+{\footnotesize\ttfamily \label{servo_8h_ae5c0ca512977be2a856e2111dde5a500} 
+bool servo\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structservo__pca__t}{servo\+\_\+pca\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dev}{}\end{DoxyParamCaption})}
+
+
+
+Inicializa el PCA9685 y el bus I2C. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em dev} & Estructura del dispositivo a inicializar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+true en éxito, false en error.
+\end{DoxyReturn}
+Inicializa el PCA9685 y el bus I2C.
+
+
+\begin{DoxyParams}{Parámetros}
+{\em dev} & Dispositivo PCA9685 a configurar. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+true en éxito, false en error o puntero nulo. 
+\end{DoxyReturn}
+\Hypertarget{servo_8h_a2f66ccdf152b0879d5b8f299e6cf3071}\index{servo.h@{servo.h}!servo\_set\_us@{servo\_set\_us}}
+\index{servo\_set\_us@{servo\_set\_us}!servo.h@{servo.h}}
+\doxysubsubsection{\texorpdfstring{servo\_set\_us()}{servo\_set\_us()}}
+{\footnotesize\ttfamily \label{servo_8h_a2f66ccdf152b0879d5b8f299e6cf3071} 
+bool servo\+\_\+set\+\_\+us (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structservo__pca__t}{servo\+\_\+pca\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{dev}{, }\item[{uint8\+\_\+t}]{channel}{, }\item[{float}]{us}{}\end{DoxyParamCaption})}
+
+
+
+Configura el pulso de un canal en microsegundos. 
+
+
+\begin{DoxyParams}{Parámetros}
+{\em dev} & Dispositivo PCA9685. \\
+\hline
+{\em channel} & Canal \mbox{[}0..15\mbox{]}. \\
+\hline
+{\em us} & Ancho de pulso en µs. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Devuelve}
+true en éxito, false en error. 
+\end{DoxyReturn}

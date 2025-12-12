@@ -1,0 +1,5 @@
+# Pico_server
+
+Este módulo implementa el lado servidor del sistema Mimic Hand: la mano robótica. Su función es recibir por UDP las tramas enviadas por el guante, parsear los valores normalizados de cada dedo (0–9) y traducirlos a anchos de pulso para el driver PCA9685, que a su vez controla los servomotores de la mano. De esta forma, la mano replica en tiempo (casi) real los gestos realizados por el usuario con el guante.
+
+Internamente, el servidor se conecta como STA a un hotspot Wi-Fi, obtiene una IP por DHCP y queda escuchando en un puerto fijo (p. ej. 4242). El código combina polling + IRQ: un repeating_timer en interrupción se usa como heartbeat (LED de estado), mientras que el bucle principal se encarga de avanzar la pila de red (cyw43_arch_poll()), procesar los paquetes UDP entrantes y actualizar de forma segura los servos según los últimos datos recibidos.
